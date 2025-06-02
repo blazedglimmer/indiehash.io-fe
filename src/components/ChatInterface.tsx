@@ -94,11 +94,26 @@ function MarkdownResponse({ content }: { content: string }) {
 export default function ChatInterface({ chat, setChats }: { chat: Chat | null; setChats: React.Dispatch<React.SetStateAction<Chat[]>> }) {
   const [loading, setLoading] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState(0);
+  const [inputEnabled, setInputEnabled] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Predefined prompts for onboarding
+  const predefinedPrompts = [
+    'What can you do?',
+    'Show me trending topics.',
+    'Help me get started with IndieChat.',
+    'Suggest some interesting AI use cases.',
+    'How do I use resources?'
+  ];
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chat?.messages]);
+
+  useEffect(() => {
+    // Enable input if there are messages
+    if (chat && chat.messages.length > 0) setInputEnabled(true);
+  }, [chat]);
 
   const handleSendMessage = async (message: string) => {
     if (!chat || !message.trim()) return;
@@ -133,6 +148,12 @@ export default function ChatInterface({ chat, setChats }: { chat: Chat | null; s
     }, 2000);
   };
 
+  // Handle prompt selection
+  const handlePromptSelect = (prompt: string) => {
+    setInputEnabled(true);
+    handleSendMessage(prompt);
+  };
+
   if (!chat) {
     return (
       <div className="flex-1 flex items-center justify-center">
@@ -150,7 +171,7 @@ export default function ChatInterface({ chat, setChats }: { chat: Chat | null; s
   return (
     <div className="flex-1 flex flex-col items-center justify-between min-h-screen bg-gray-950">
       <div className="flex-1 flex flex-col items-center justify-center w-full pt-12">
-        {/* Show welcome if no messages */}
+        {/* Show prompts if no messages */}
         {chat.messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center">
             <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-full mb-4 flex items-center justify-center text-gray-900">
@@ -159,9 +180,21 @@ export default function ChatInterface({ chat, setChats }: { chat: Chat | null; s
               </svg>
             </div>
             <h2 className="text-2xl font-bold mb-2">Hi, I'm IndieChat.</h2>
-            <p className="text-gray-400">How can I help you today?</p>
+            <p className="text-gray-400 mb-4">Choose a prompt to get started:</p>
+            <div className="flex flex-col gap-2 w-full max-w-xs">
+              {predefinedPrompts.map((prompt, idx) => (
+                <button
+                  key={idx}
+                  className="py-2 px-4 rounded bg-gray-800 text-white hover:bg-primary transition-colors text-left"
+                  onClick={() => handlePromptSelect(prompt)}
+                  disabled={loading}
+                >
+                  {prompt}
+                </button>
+              ))}
+            </div>
           </div>
-        ) : (
+        ) :
           <>
             {userMessage && (
               <div className="w-full flex justify-center mb-8">
@@ -199,12 +232,12 @@ export default function ChatInterface({ chat, setChats }: { chat: Chat | null; s
               </div>
             )}
           </>
-        )}
+        }
         <div ref={messagesEndRef} />
       </div>
       <div className="w-full flex justify-center border-t border-gray-700 p-4 bg-gray-950">
         <div className="w-full max-w-2xl">
-          <ChatInput onSendMessage={handleSendMessage} disabled={loading} />
+          <ChatInput onSendMessage={handleSendMessage} disabled={loading || !inputEnabled} />
         </div>
       </div>
     </div>
