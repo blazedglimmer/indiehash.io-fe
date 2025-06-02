@@ -2,6 +2,8 @@ import { format } from 'date-fns';
 import { Chat } from '@/types';
 import { useSession, signOut } from 'next-auth/react';
 import Image from 'next/image';
+import { Plus, Globe } from 'lucide-react';
+import { useRef, useState } from 'react';
 
 interface SidebarProps {
   chats: Chat[];
@@ -16,6 +18,8 @@ interface GroupedChats {
 
 export default function Sidebar({ chats, activeChat, onSelectChat, onNewChat }: SidebarProps) {
   const { data: session } = useSession();
+  const [hovered, setHovered] = useState(false);
+  const sidebarRef = useRef<HTMLDivElement>(null);
 
   // Group chats by date
   const groupedChats: GroupedChats = chats.reduce((groups: GroupedChats, chat) => {
@@ -45,75 +49,87 @@ export default function Sidebar({ chats, activeChat, onSelectChat, onNewChat }: 
   }, {});
 
   return (
-    <div className="w-64 flex flex-col border-r border-gray-700 bg-gray-900">
-      <div className="p-4 border-b border-gray-700">
-        <h1 className="text-2xl font-bold text-gray-300">indiechat</h1>
-      </div>
-      <div className="px-4 py-4">
-        <button 
-          onClick={onNewChat}
-          className="flex items-center justify-center w-full py-2 px-4 bg-gradient-to-r from-primary to-primary-light rounded-md hover:from-primary-dark hover:to-primary transition-colors text-gray-900 font-medium"
-        >
-          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-          </svg>
-          New chat
+    <div
+      className="relative h-screen"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      ref={sidebarRef}
+    >
+      {/* Icon Pane (always visible) */}
+      <div className="flex flex-col items-center bg-gray-900 border-r border-gray-700 h-full w-16 py-4 z-20">
+        <div className="mb-6">
+          <Image src="/images/cat-only-dark.png" alt="IndieChat Logo" width={36} height={36} />
+        </div>
+        <button onClick={onNewChat} className="flex items-center justify-center w-12 h-12 bg-gray-800 rounded-full hover:bg-gray-700 transition-colors text-gray-400 mb-4">
+          <Plus className="w-6 h-6" />
         </button>
-      </div>
-      <div className="flex-1 overflow-y-auto">
-        {Object.entries(groupedChats).map(([groupName, groupChats]) => (
-          <div key={groupName} className="mb-4">
-            <h3 className="px-4 py-2 text-sm text-gray-500">{groupName}</h3>
-            {groupChats.map(chat => (
-              <div 
-                key={chat.id}
-                className={`px-4 py-2 cursor-pointer hover:bg-gray-800 ${activeChat === chat.id ? 'bg-gray-800' : ''}`}
-                onClick={() => onSelectChat(chat.id)}
-              >
-                <p className="truncate text-sm">{chat.title || 'New Chat'}</p>
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
-      <div className="p-4 border-t border-gray-700">
-        {session?.user ? (
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              {session.user.image ? (
-                <Image
-                  src={session.user.image}
-                  alt={session.user.name || 'User'}
-                  width={32}
-                  height={32}
-                  className="rounded-full"
-                />
-              ) : (
-                <div className="w-8 h-8 bg-gradient-to-r from-primary to-primary-light rounded-full flex items-center justify-center text-gray-900 font-medium">
-                  {session.user.name?.[0] || session.user.email?.[0] || 'U'}
-                </div>
-              )}
-              <div className="ml-2">
-                <p className="text-sm font-medium">{session.user.name || 'User'}</p>
-                <p className="text-xs text-gray-400">{session.user.email}</p>
-              </div>
-            </div>
-            <button
-              onClick={() => signOut()}
-              className="text-sm text-gray-400 hover:text-white"
-            >
-              Sign out
-            </button>
-          </div>
-        ) : (
-          <div className="flex items-center">
+        <button className="flex items-center justify-center w-12 h-12 bg-gray-800 rounded-full hover:bg-gray-700 transition-colors text-gray-400 mb-4">
+          <Globe className="w-6 h-6" />
+        </button>
+        <div className="flex-1" />
+        <div className="mb-4">
+          {session?.user ? (
+            <Image src={session.user.image || '/images/cat-only-dark.png'} alt={session.user.name || 'User'} width={32} height={32} className="rounded-full" />
+          ) : (
             <div className="w-8 h-8 bg-gradient-to-r from-primary to-primary-light rounded-full flex items-center justify-center text-gray-900 font-medium">
               <span>?</span>
             </div>
-            <span className="ml-2">Not signed in</span>
-          </div>
-        )}
+          )}
+        </div>
       </div>
+      {/* Details Pane (appears on hover) */}
+      {hovered && (
+        <div className="absolute left-16 top-0 h-full w-48 bg-gray-900 border-r border-gray-700 shadow-xl z-30 flex flex-col py-4 transition-all duration-200">
+          <div className="flex items-center mb-6 px-4">
+            <span className="text-lg font-bold text-white">IndieChat</span>
+          </div>
+          <div className="flex flex-col gap-2 mb-4 px-4">
+            <button className="flex items-center gap-3 text-white py-2">
+              <Plus className="w-5 h-5" />
+              <span>New Chat</span>
+            </button>
+            <button className="flex items-center gap-3 text-white py-2">
+              <Globe className="w-5 h-5" />
+              <span>Resources</span>
+            </button>
+          </div>
+          {/* Chat history list */}
+          <div className="flex-1 overflow-y-auto px-2">
+            {Object.entries(groupedChats).map(([groupName, groupChats]) => (
+              <div key={groupName} className="mb-2">
+                <h3 className="px-2 py-1 text-xs text-gray-500 font-semibold uppercase tracking-wide">{groupName}</h3>
+                {groupChats.map(chat => (
+                  <div
+                    key={chat.id}
+                    className={`px-2 py-1 rounded cursor-pointer text-sm truncate mb-1 transition-colors ${activeChat === chat.id ? 'bg-gray-800 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white'}`}
+                    onClick={() => onSelectChat(chat.id)}
+                  >
+                    {chat.title || 'New Chat'}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+          <div className="px-4 pb-4 mt-2">
+            {session?.user ? (
+              <div className="flex items-center gap-3">
+                <Image src={session.user.image || '/images/cat-only-dark.png'} alt={session.user.name || 'User'} width={32} height={32} className="rounded-full" />
+                <div>
+                  <p className="text-sm font-medium text-white">{session.user.name || 'User'}</p>
+                  <p className="text-xs text-gray-400">{session.user.email}</p>
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-gradient-to-r from-primary to-primary-light rounded-full flex items-center justify-center text-gray-900 font-medium">
+                  <span>?</span>
+                </div>
+                <span className="text-white">Not signed in</span>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
