@@ -1,6 +1,5 @@
 import { format } from 'date-fns';
 import { Chat } from '@/types';
-import { useSession, signOut } from 'next-auth/react';
 import Image from 'next/image';
 import { Plus, Globe } from 'lucide-react';
 import { useRef, useState } from 'react';
@@ -17,7 +16,6 @@ interface GroupedChats {
 }
 
 export default function Sidebar({ chats, activeChat, onSelectChat, onNewChat }: SidebarProps) {
-  const { data: session } = useSession();
   const [hovered, setHovered] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
 
@@ -68,13 +66,7 @@ export default function Sidebar({ chats, activeChat, onSelectChat, onNewChat }: 
         </button>
         <div className="flex-1" />
         <div className="mb-4">
-          {session?.user ? (
-            <Image src={session.user.image || '/images/cat-only-dark.png'} alt={session.user.name || 'User'} width={32} height={32} className="rounded-full" />
-          ) : (
-            <div className="w-8 h-8 bg-gradient-to-r from-primary to-primary-light rounded-full flex items-center justify-center text-gray-900 font-medium">
-              <span>?</span>
-            </div>
-          )}
+          <Image src="/images/cat-only-dark.png" alt="IndieChat Logo" width={32} height={32} className="rounded-full" />
         </div>
       </div>
       {/* Details Pane (appears on hover) */}
@@ -111,22 +103,13 @@ export default function Sidebar({ chats, activeChat, onSelectChat, onNewChat }: 
             ))}
           </div>
           <div className="px-4 pb-4 mt-2">
-            {session?.user ? (
-              <div className="flex items-center gap-3">
-                <Image src={session.user.image || '/images/cat-only-dark.png'} alt={session.user.name || 'User'} width={32} height={32} className="rounded-full" />
-                <div>
-                  <p className="text-sm font-medium text-white">{session.user.name || 'User'}</p>
-                  <p className="text-xs text-gray-400">{session.user.email}</p>
-                </div>
+            <div className="flex items-center gap-3">
+              <Image src="/images/cat-only-dark.png" alt="IndieChat Logo" width={32} height={32} className="rounded-full" />
+              <div>
+                <p className="text-sm font-medium text-white">User</p>
+                <p className="text-xs text-gray-400">user@example.com</p>
               </div>
-            ) : (
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-gradient-to-r from-primary to-primary-light rounded-full flex items-center justify-center text-gray-900 font-medium">
-                  <span>?</span>
-                </div>
-                <span className="text-white">Not signed in</span>
-              </div>
-            )}
+            </div>
           </div>
         </div>
       )}
