@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Chat } from '@/types';
+import { Chat } from '../../../../types';
 import { getAllChats } from '@/utils/storage';
 import { CheckCircle2, ArrowLeft } from 'lucide-react';
 
@@ -11,7 +11,9 @@ function extractYouTubeId(content: string): string | null {
   const ytMatch = ytRegex.exec(content);
   if (!ytMatch) return null;
   const url = ytMatch[0];
-  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/)?)([\w-]{11})/);
+  const match = url.match(
+    /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/)?)([\w-]{11})/
+  );
   return match ? match[1] : null;
 }
 
@@ -45,7 +47,10 @@ export default function ChatDetailsPage() {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 via-gray-200 to-gray-100 text-gray-900">
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4">Response Not Found</h1>
-          <button onClick={() => router.back()} className="inline-flex items-center gap-2 px-4 py-2 rounded bg-gradient-to-r from-primary to-primary-light text-gray-900 font-semibold hover:from-primary-dark hover:to-primary transition">
+          <button
+            onClick={() => router.back()}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded bg-gradient-to-r from-primary to-primary-light text-gray-900 font-semibold hover:from-primary-dark hover:to-primary transition"
+          >
             <ArrowLeft className="w-4 h-4" /> Go Back
           </button>
         </div>
@@ -65,7 +70,10 @@ export default function ChatDetailsPage() {
   };
 
   // Extract title and description (for demo, use first line as title, rest as description)
-  const [title, ...descLines] = message.content.replace(/https?:\/\/(www\.)?(youtube\.com|youtu\.be)\S*/gi, '').trim().split('\n');
+  const [title, ...descLines] = message.content
+    .replace(/https?:\/\/(www\.)?(youtube\.com|youtu\.be)\S*/gi, '')
+    .trim()
+    .split('\n');
   const description = descLines.join('\n').trim();
 
   return (
@@ -74,7 +82,11 @@ export default function ChatDetailsPage() {
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-4">
             {user.avatar ? (
-              <img src={user.avatar} alt={user.name} className="w-12 h-12 rounded-full" />
+              <img
+                src={user.avatar}
+                alt={user.name}
+                className="w-12 h-12 rounded-full"
+              />
             ) : (
               <div className="w-12 h-12 rounded-full bg-violet-100 flex items-center justify-center text-xl font-bold text-violet-700">
                 {user.name[0]}
@@ -119,8 +131,14 @@ export default function ChatDetailsPage() {
       {/* Animations */}
       <style jsx global>{`
         @keyframes fade-in-up {
-          0% { opacity: 0; transform: translateY(40px); }
-          100% { opacity: 1; transform: translateY(0); }
+          0% {
+            opacity: 0;
+            transform: translateY(40px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
         .animate-fade-in-up {
           animation: fade-in-up 0.7s cubic-bezier(0.22, 1, 0.36, 1);
@@ -128,4 +146,4 @@ export default function ChatDetailsPage() {
       `}</style>
     </div>
   );
-} 
+}

@@ -1,7 +1,12 @@
 import { format } from 'date-fns';
 import { Message } from '@/types';
-import Link from 'next/link';
-import { MessageCircle, Youtube, Globe, ListVideo, ListChecks } from 'lucide-react';
+import {
+  MessageCircle,
+  Youtube,
+  Globe,
+  ListVideo,
+  ListChecks,
+} from 'lucide-react';
 import { useState } from 'react';
 
 interface ChatMessageProps {
@@ -16,10 +21,26 @@ const mockSources = [
 ];
 
 const mockPills = [
-  { label: 'The Rust Programming...', type: 'youtube', desc: 'Best youtube playlists for learning Rust' },
-  { label: 'youtube', type: 'youtube', desc: 'Learn Rust Programming - Complete Course - YouTube' },
-  { label: 'youtube', type: 'youtube', desc: 'Learn Rust In One Epic Playlist - YouTube' },
-  { label: 'reddit.com', type: 'reddit', desc: 'Youtube channels for Rust content? - Reddit' },
+  {
+    label: 'The Rust Programming...',
+    type: 'youtube',
+    desc: 'Best youtube playlists for learning Rust',
+  },
+  {
+    label: 'youtube',
+    type: 'youtube',
+    desc: 'Learn Rust Programming - Complete Course - YouTube',
+  },
+  {
+    label: 'youtube',
+    type: 'youtube',
+    desc: 'Learn Rust In One Epic Playlist - YouTube',
+  },
+  {
+    label: 'reddit.com',
+    type: 'reddit',
+    desc: 'Youtube channels for Rust content? - Reddit',
+  },
 ];
 
 function SourceTabs({ sources, active, setActive }: any) {
@@ -46,9 +67,16 @@ function SourcePills({ pills }: any) {
   return (
     <div className="flex gap-2 flex-wrap mb-6">
       {pills.map((pill: any, idx: number) => (
-        <div key={idx} className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-800 text-gray-200 text-xs font-medium">
-          {pill.type === 'youtube' && <Youtube className="w-4 h-4 text-red-500" />}
-          {pill.type === 'reddit' && <Globe className="w-4 h-4 text-orange-400" />}
+        <div
+          key={idx}
+          className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-800 text-gray-200 text-xs font-medium"
+        >
+          {pill.type === 'youtube' && (
+            <Youtube className="w-4 h-4 text-red-500" />
+          )}
+          {pill.type === 'reddit' && (
+            <Globe className="w-4 h-4 text-orange-400" />
+          )}
           <span className="truncate max-w-[120px]">{pill.desc}</span>
         </div>
       ))}
@@ -86,7 +114,11 @@ function MarkdownResponse({ content }: { content: string }) {
           );
         }
         if (line.startsWith('**') && line.endsWith('**')) {
-          return <div key={idx} className="font-bold text-lg mt-6 mb-2 text-white">{line.replace(/\*\*/g, '')}</div>;
+          return (
+            <div key={idx} className="font-bold text-lg mt-6 mb-2 text-white">
+              {line.replace(/\*\*/g, '')}
+            </div>
+          );
         }
         if (line.trim() === '') return null;
         return <div key={idx}>{line}</div>;
@@ -103,7 +135,11 @@ export default function ChatMessage({ message }: ChatMessageProps) {
     // Perplexity-style card for assistant
     return (
       <div className="bg-gray-900 rounded-2xl shadow-xl border border-gray-800 p-8 mb-8">
-        <SourceTabs sources={mockSources} active={activeTab} setActive={setActiveTab} />
+        <SourceTabs
+          sources={mockSources}
+          active={activeTab}
+          setActive={setActiveTab}
+        />
         <SourcePills pills={mockPills} />
         <MarkdownResponse content={message.content} />
       </div>
@@ -122,7 +158,9 @@ export default function ChatMessage({ message }: ChatMessageProps) {
             You
           </div>
         </div>
-        <div className={`p-3 rounded-lg bg-gradient-to-r from-primary to-primary-light text-gray-900`}>
+        <div
+          className={`p-3 rounded-lg bg-gradient-to-r from-primary to-primary-light text-gray-900`}
+        >
           <p className="text-sm">{message.content}</p>
         </div>
       </div>

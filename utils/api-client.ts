@@ -1,4 +1,4 @@
-import { ApiRequestOptions, ApiResponse } from '../types';
+import { ApiRequestOptions, ApiResponse } from '@/types';
 
 function buildQueryString(params?: Record<string, any>): string {
   if (!params) return '';
@@ -51,5 +51,8 @@ export async function apiRequest<T = any>(
 export const apiGet = <T = any>(url: string, options: ApiRequestOptions = {}) =>
   apiRequest<T>(url, { ...options, method: 'GET' });
 
-export const apiPost = <T = any>(url: string, body: any, options: ApiRequestOptions = {}) =>
-  apiRequest<T>(url, { ...options, method: 'POST', body }); 
+export const apiPost = <T = any>(
+  url: string,
+  body: any,
+  options: ApiRequestOptions = {}
+) => apiRequest<T>(url, { ...options, method: 'POST', body });

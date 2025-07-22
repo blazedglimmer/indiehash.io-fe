@@ -1,6 +1,6 @@
 'use client';
 
-import './landing.css';
+import '@/app/landing/landing.css';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import Image from 'next/image';
@@ -32,11 +32,23 @@ export default function LandingPage() {
       {/* Top Navigation */}
       <nav className="flex justify-between items-center px-8 pt-6 z-10">
         <div className="flex items-center space-x-2">
-          <span className="text-2xl font-bold bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">IndieHash</span>
+          <span className="text-2xl font-bold bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">
+            IndieHash
+          </span>
         </div>
         <div className="flex items-center space-x-8">
-          <Link href="/chat" className="text-gray-300 hover:text-primary transition font-medium">Launch app</Link>
-          <Link href="/resources" className="text-gray-300 hover:text-primary transition font-medium">Resources</Link>
+          <Link
+            href="/chat"
+            className="text-gray-300 hover:text-primary transition font-medium"
+          >
+            Launch app
+          </Link>
+          <Link
+            href="/resources"
+            className="text-gray-300 hover:text-primary transition font-medium"
+          >
+            Resources
+          </Link>
         </div>
       </nav>
       {/* Main Content */}
@@ -49,8 +61,12 @@ export default function LandingPage() {
           className="mb-6"
           priority
         />
-        <h1 className="text-7xl md:text-8xl font-extrabold text-center bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent drop-shadow-lg mb-4">IndieHash</h1>
-        <p className="text-lg md:text-xl text-primary-light text-center mb-8 tracking-wide">A Content Marketplace by IndieHash</p>
+        <h1 className="text-7xl md:text-8xl font-extrabold text-center bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent drop-shadow-lg mb-4">
+          IndieHash
+        </h1>
+        <p className="text-lg md:text-xl text-primary-light text-center mb-8 tracking-wide">
+          A Content Marketplace by IndieHash
+        </p>
         <form className="w-full max-w-lg flex items-center justify-center mb-12">
           <input
             type="email"
@@ -68,10 +84,30 @@ export default function LandingPage() {
       </main>
       {/* Decorative bottom element */}
       <div className="absolute bottom-0 left-0 w-full flex justify-center z-0">
-        <svg width="600" height="120" viewBox="0 0 600 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <ellipse cx="300" cy="120" rx="300" ry="60" fill="url(#paint0_linear)" fillOpacity="0.15" />
+        <svg
+          width="600"
+          height="120"
+          viewBox="0 0 600 120"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <ellipse
+            cx="300"
+            cy="120"
+            rx="300"
+            ry="60"
+            fill="url(#paint0_linear)"
+            fillOpacity="0.15"
+          />
           <defs>
-            <linearGradient id="paint0_linear" x1="0" y1="120" x2="600" y2="120" gradientUnits="userSpaceOnUse">
+            <linearGradient
+              id="paint0_linear"
+              x1="0"
+              y1="120"
+              x2="600"
+              y2="120"
+              gradientUnits="userSpaceOnUse"
+            >
               <stop stopColor="#FFB800" />
               <stop offset="1" stopColor="#FFD54F" />
             </linearGradient>
@@ -80,4 +116,4 @@ export default function LandingPage() {
       </div>
     </div>
   );
-} 
+}

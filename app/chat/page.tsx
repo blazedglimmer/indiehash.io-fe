@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import ChatInterface from '@/components/ChatInterface';
-import Sidebar from '@/components/Sidebar';
+import ChatInterface from '@/components/chat-interface';
+import Sidebar from '@/components/side-bar';
 import { createNewChat, getAllChats } from '@/utils/storage';
 import { Chat } from '@/types';
 
@@ -36,16 +36,13 @@ export default function ChatPage() {
 
   return (
     <div className="flex h-screen bg-gray-900 text-white">
-      <Sidebar 
-        chats={chats} 
-        activeChat={activeChatId} 
-        onSelectChat={setActiveChatId} 
+      <Sidebar
+        chats={chats}
+        activeChat={activeChatId}
+        onSelectChat={setActiveChatId}
         onNewChat={handleNewChat}
       />
-      <ChatInterface 
-        chat={activeChat} 
-        setChats={setChats}
-      />
+      <ChatInterface chat={activeChat} setChats={setChats} />
     </div>
   );
-} 
+}

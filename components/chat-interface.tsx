@@ -1,8 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
-import ChatInput from './chatInput';
+import ChatInput from '@/components/chat-input';
 import { updateChat } from '@/utils/storage';
 import { Chat, Message } from '@/types';
-import { MessageCircle, Youtube, Globe, ListVideo, ListChecks } from 'lucide-react';
+import {
+  MessageCircle,
+  Youtube,
+  Globe,
+  ListVideo,
+  ListChecks,
+} from 'lucide-react';
 
 const mockSources = [
   { label: 'IndieHash', icon: MessageCircle },
@@ -12,10 +18,26 @@ const mockSources = [
 ];
 
 const mockPills = [
-  { label: 'The Rust Programming...', type: 'youtube', desc: 'Best youtube playlists for learning Rust' },
-  { label: 'youtube', type: 'youtube', desc: 'Learn Rust Programming - Complete Course - YouTube' },
-  { label: 'youtube', type: 'youtube', desc: 'Learn Rust In One Epic Playlist - YouTube' },
-  { label: 'reddit.com', type: 'reddit', desc: 'Youtube channels for Rust content? - Reddit' },
+  {
+    label: 'The Rust Programming...',
+    type: 'youtube',
+    desc: 'Best youtube playlists for learning Rust',
+  },
+  {
+    label: 'youtube',
+    type: 'youtube',
+    desc: 'Learn Rust Programming - Complete Course - YouTube',
+  },
+  {
+    label: 'youtube',
+    type: 'youtube',
+    desc: 'Learn Rust In One Epic Playlist - YouTube',
+  },
+  {
+    label: 'reddit.com',
+    type: 'reddit',
+    desc: 'Youtube channels for Rust content? - Reddit',
+  },
 ];
 
 function SourceTabs({ sources, active, setActive }: any) {
@@ -42,9 +64,16 @@ function SourcePills({ pills }: any) {
   return (
     <div className="flex gap-2 flex-wrap mb-6">
       {pills.map((pill: any, idx: number) => (
-        <div key={idx} className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-800 text-gray-200 text-xs font-medium">
-          {pill.type === 'youtube' && <Youtube className="w-4 h-4 text-red-500" />}
-          {pill.type === 'reddit' && <Globe className="w-4 h-4 text-orange-400" />}
+        <div
+          key={idx}
+          className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-800 text-gray-200 text-xs font-medium"
+        >
+          {pill.type === 'youtube' && (
+            <Youtube className="w-4 h-4 text-red-500" />
+          )}
+          {pill.type === 'reddit' && (
+            <Globe className="w-4 h-4 text-orange-400" />
+          )}
           <span className="truncate max-w-[120px]">{pill.desc}</span>
         </div>
       ))}
@@ -82,7 +111,11 @@ function MarkdownResponse({ content }: { content: string }) {
           );
         }
         if (line.startsWith('**') && line.endsWith('**')) {
-          return <div key={idx} className="font-bold text-lg mt-6 mb-2 text-white">{line.replace(/\*\*/g, '')}</div>;
+          return (
+            <div key={idx} className="font-bold text-lg mt-6 mb-2 text-white">
+              {line.replace(/\*\*/g, '')}
+            </div>
+          );
         }
         if (line.trim() === '') return null;
         return <div key={idx}>{line}</div>;
@@ -91,7 +124,13 @@ function MarkdownResponse({ content }: { content: string }) {
   );
 }
 
-export default function ChatInterface({ chat, setChats }: { chat: Chat | null; setChats: React.Dispatch<React.SetStateAction<Chat[]>> }) {
+export default function ChatInterface({
+  chat,
+  setChats,
+}: {
+  chat: Chat | null;
+  setChats: React.Dispatch<React.SetStateAction<Chat[]>>;
+}) {
   const [loading, setLoading] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState(0);
   const [inputEnabled, setInputEnabled] = useState(false);
@@ -103,7 +142,7 @@ export default function ChatInterface({ chat, setChats }: { chat: Chat | null; s
     'Show me trending topics.',
     'Help me get started with IndieChat.',
     'Suggest some interesting AI use cases.',
-    'How do I use resources?'
+    'How do I use resources?',
   ];
 
   useEffect(() => {
@@ -127,10 +166,13 @@ export default function ChatInterface({ chat, setChats }: { chat: Chat | null; s
       messages: [...chat.messages, userMessage],
     };
     if (!chat.title && chat.messages.length === 0) {
-      updatedChat.title = message.substring(0, 30) + (message.length > 30 ? '...' : '');
+      updatedChat.title =
+        message.substring(0, 30) + (message.length > 30 ? '...' : '');
     }
     updateChat(updatedChat);
-    setChats(prevChats => prevChats.map(c => c.id === chat.id ? updatedChat : c));
+    setChats(prevChats =>
+      prevChats.map(c => (c.id === chat.id ? updatedChat : c))
+    );
     setLoading(true);
     setTimeout(() => {
       const aiResponse: Message = {
@@ -143,7 +185,9 @@ export default function ChatInterface({ chat, setChats }: { chat: Chat | null; s
         messages: [...updatedChat.messages, aiResponse],
       };
       updateChat(finalChat);
-      setChats(prevChats => prevChats.map(c => c.id === chat.id ? finalChat : c));
+      setChats(prevChats =>
+        prevChats.map(c => (c.id === chat.id ? finalChat : c))
+      );
       setLoading(false);
     }, 2000);
   };
@@ -163,10 +207,20 @@ export default function ChatInterface({ chat, setChats }: { chat: Chat | null; s
   }
 
   // Find the latest user and assistant messages
-  const lastUserIdx = [...(chat.messages || [])].reverse().findIndex(m => m.role === 'user');
-  const lastAssistantIdx = [...(chat.messages || [])].reverse().findIndex(m => m.role === 'assistant');
-  const userMessage = lastUserIdx !== -1 ? chat.messages[chat.messages.length - 1 - lastUserIdx] : null;
-  const assistantMessage = lastAssistantIdx !== -1 ? chat.messages[chat.messages.length - 1 - lastAssistantIdx] : null;
+  const lastUserIdx = [...(chat.messages || [])]
+    .reverse()
+    .findIndex(m => m.role === 'user');
+  const lastAssistantIdx = [...(chat.messages || [])]
+    .reverse()
+    .findIndex(m => m.role === 'assistant');
+  const userMessage =
+    lastUserIdx !== -1
+      ? chat.messages[chat.messages.length - 1 - lastUserIdx]
+      : null;
+  const assistantMessage =
+    lastAssistantIdx !== -1
+      ? chat.messages[chat.messages.length - 1 - lastAssistantIdx]
+      : null;
 
   return (
     <div className="flex-1 flex flex-col items-center justify-between min-h-screen bg-gray-950">
@@ -175,12 +229,25 @@ export default function ChatInterface({ chat, setChats }: { chat: Chat | null; s
         {chat.messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center">
             <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-full mb-4 flex items-center justify-center text-gray-900">
-              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+              <svg
+                className="w-8 h-8"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
+                />
               </svg>
             </div>
             <h2 className="text-2xl font-bold mb-2">Hi, I'm IndieChat.</h2>
-            <p className="text-gray-400 mb-4">Choose a prompt to get started:</p>
+            <p className="text-gray-400 mb-4">
+              Choose a prompt to get started:
+            </p>
             <div className="flex flex-col gap-2 w-full max-w-xs">
               {predefinedPrompts.map((prompt, idx) => (
                 <button
@@ -194,7 +261,7 @@ export default function ChatInterface({ chat, setChats }: { chat: Chat | null; s
               ))}
             </div>
           </div>
-        ) :
+        ) : (
           <>
             {userMessage && (
               <div className="w-full flex justify-center mb-8">
@@ -206,7 +273,11 @@ export default function ChatInterface({ chat, setChats }: { chat: Chat | null; s
             {assistantMessage && (
               <div className="w-full flex justify-center">
                 <div className="bg-gray-900 rounded-2xl shadow-xl border border-gray-800 p-8 mb-8 max-w-2xl w-full">
-                  <SourceTabs sources={mockSources} active={activeTab} setActive={setActiveTab} />
+                  <SourceTabs
+                    sources={mockSources}
+                    active={activeTab}
+                    setActive={setActiveTab}
+                  />
                   <SourcePills pills={mockPills} />
                   <MarkdownResponse content={assistantMessage.content} />
                 </div>
@@ -232,12 +303,15 @@ export default function ChatInterface({ chat, setChats }: { chat: Chat | null; s
               </div>
             )}
           </>
-        }
+        )}
         <div ref={messagesEndRef} />
       </div>
       <div className="w-full flex justify-center border-t border-gray-700 p-4 bg-gray-950">
         <div className="w-full max-w-2xl">
-          <ChatInput onSendMessage={handleSendMessage} disabled={loading || !inputEnabled} />
+          <ChatInput
+            onSendMessage={handleSendMessage}
+            disabled={loading || !inputEnabled}
+          />
         </div>
       </div>
     </div>
