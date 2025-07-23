@@ -438,11 +438,20 @@ export default function ModernChatInterface({
                     AI Summary
                   </h3>
                 </div>
-                <div className="glass-dark p-6 rounded-2xl">
+                <div className="glass-dark p-6 rounded-2xl mb-4">
                   <p className="text-gray-200 leading-relaxed text-lg">
                     {summary}
                   </p>
                 </div>
+                {/* Enriched Content Section */}
+                {data.enriched_content && (
+                  <div className="glass-dark p-6 rounded-2xl border border-indigo-500/30">
+                    <h4 className="text-md font-semibold text-indigo-300 mb-2">Enriched Insights</h4>
+                    <p className="text-gray-300 leading-relaxed text-base">
+                      {data.enriched_content}
+                    </p>
+                  </div>
+                )}
               </div>
             )}
 
