@@ -3,7 +3,14 @@
 import { useState, useEffect, useRef } from 'react';
 import { Chat, Message } from '@/types';
 import { updateChat } from '@/utils/storage';
-import { queryEnhanced, getMockResponse, EnhancedQueryData } from '@/utils/api';
+import {
+  queryEnhanced,
+  getMockResponse,
+  EnhancedQueryData,
+  getLandingPageData,
+  getMockLandingPageData,
+  LandingPageData,
+} from '@/utils/api';
 import {
   Send,
   Sparkles,
@@ -18,6 +25,9 @@ import {
   Tag,
   Copy,
   Check,
+  Star,
+  Database,
+  Activity,
 } from 'lucide-react';
 
 interface ModernChatInterfaceProps {
@@ -25,32 +35,27 @@ interface ModernChatInterfaceProps {
   setChats: React.Dispatch<React.SetStateAction<Chat[]>>;
 }
 
-const predefinedPrompts = [
-  {
-    icon: Code,
-    text: 'Best resources to learn Rust programming?',
-    category: 'Programming',
-    gradient: 'from-orange-500 to-red-500',
-  },
-  {
-    icon: Brain,
-    text: 'How to get started with machine learning?',
-    category: 'AI/ML',
-    gradient: 'from-purple-500 to-pink-500',
-  },
-  {
-    icon: Globe,
-    text: 'Modern web development frameworks?',
-    category: 'Web Dev',
-    gradient: 'from-blue-500 to-cyan-500',
-  },
-  {
-    icon: BookOpen,
-    text: 'Best practices for system design?',
-    category: 'Architecture',
-    gradient: 'from-green-500 to-emerald-500',
-  },
-];
+// Icon mapping for categories
+const categoryIcons: { [key: string]: any } = {
+  Programming: Code,
+  Travel: Globe,
+  Lifestyle: Sparkles,
+  Business: TrendingUp,
+  'AI/ML': Brain,
+  'Web Dev': Globe,
+  Architecture: BookOpen,
+};
+
+// Gradient mapping for categories
+const categoryGradients: { [key: string]: string } = {
+  Programming: 'from-orange-500 to-red-500',
+  Travel: 'from-blue-500 to-cyan-500',
+  Lifestyle: 'from-purple-500 to-pink-500',
+  Business: 'from-green-500 to-emerald-500',
+  'AI/ML': 'from-indigo-500 to-purple-500',
+  'Web Dev': 'from-teal-500 to-blue-500',
+  Architecture: 'from-amber-500 to-orange-500',
+};
 
 const sourceCategories = [
   { label: 'IndieHash AI', icon: Sparkles, active: true },
@@ -67,8 +72,48 @@ export default function ModernChatInterface({
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [landingData, setLandingData] = useState<LandingPageData | null>(null);
+  const [loadingLandingData, setLoadingLandingData] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Load landing page data on component mount
+  useEffect(() => {
+    const loadLandingData = async () => {
+      try {
+        setLoadingLandingData(true);
+        let response;
+        try {
+          response = await getLandingPageData();
+        } catch (error) {
+          console.warn('API call failed, using mock data:', error);
+          response = getMockLandingPageData();
+        }
+        setLandingData(response.data);
+        // Set first category as default
+        if (response.data.quick_start_questions.length > 0) {
+          setSelectedCategory(
+            response.data.quick_start_questions[0]?.category || ''
+          );
+        }
+      } catch (error) {
+        console.error('Error loading landing data:', error);
+        // Fallback to mock data
+        const mockData = getMockLandingPageData();
+        setLandingData(mockData.data);
+        if (mockData.data.quick_start_questions.length > 0) {
+          setSelectedCategory(
+            mockData.data.quick_start_questions[0]?.category || ''
+          );
+        }
+      } finally {
+        setLoadingLandingData(false);
+      }
+    };
+
+    loadLandingData();
+  }, []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -287,6 +332,32 @@ export default function ModernChatInterface({
     }
   };
 
+  // Get current category questions
+  const getCurrentCategoryQuestions = () => {
+    if (!landingData || !selectedCategory) return [];
+    const category = landingData.quick_start_questions.find(
+      q => q.category === selectedCategory
+    );
+    return category?.questions || [];
+  };
+
+  // Get predefined prompts from API data
+  const getPredefinedPrompts = () => {
+    if (!landingData) return [];
+
+    const currentQuestions = getCurrentCategoryQuestions();
+    const IconComponent = categoryIcons[selectedCategory] || Code;
+    const gradient =
+      categoryGradients[selectedCategory] || 'from-gray-500 to-gray-600';
+
+    return currentQuestions.slice(0, 4).map(question => ({
+      icon: IconComponent,
+      text: question,
+      category: selectedCategory,
+      gradient,
+    }));
+  };
+
   if (!chat) {
     return (
       <div className="flex-1 flex items-center justify-center">
@@ -319,45 +390,172 @@ export default function ModernChatInterface({
         {chat.messages.length === 0 ? (
           /* Welcome Screen */
           <div className="h-full flex flex-col items-center justify-center p-8">
-            <div className="text-center mb-12">
+            {/* Header Section */}
+            <div className="text-center mb-8">
               <div className="w-20 h-20 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center mx-auto mb-6 float pulse-glow">
                 <Sparkles className="w-10 h-10 text-white" />
               </div>
-              <h1 className="text-4xl font-bold gradient-text mb-4">
-                Welcome to IndieHash AI
+              <h1 className="text-4xl font-bold gradient-text mb-2">
+                {landingData?.product_info.name || 'IndieHash AI'}
               </h1>
-              <p className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
-                Your intelligent assistant for discovering resources, learning
-                new skills, and exploring ideas. Ask me anything!
+              <p className="text-lg text-indigo-300 mb-4">
+                {landingData?.product_info.tagline ||
+                  'RAG engine on top of a curated database.'}
+              </p>
+              <p className="text-gray-400 max-w-3xl mx-auto leading-relaxed">
+                {landingData?.product_info.description ||
+                  'Your intelligent assistant for discovering resources, learning new skills, and exploring ideas.'}
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-4xl">
-              {predefinedPrompts.map((prompt, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => handlePromptSelect(prompt.text)}
-                  disabled={loading}
-                  className="group card-modern p-6 text-left hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <div className="flex items-start gap-4">
-                    <div
-                      className={`w-12 h-12 rounded-xl bg-gradient-to-r ${prompt.gradient} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}
-                    >
-                      <prompt.icon className="w-6 h-6 text-white" />
+            {loadingLandingData ? (
+              /* Loading State */
+              <div className="w-full max-w-6xl">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                  {[1, 2, 3, 4].map(i => (
+                    <div key={i} className="card-modern p-6">
+                      <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 rounded-xl shimmer"></div>
+                        <div className="flex-1">
+                          <div className="h-4 shimmer rounded mb-2 w-20"></div>
+                          <div className="h-6 shimmer rounded"></div>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <div className="text-sm text-gray-400 mb-1">
-                        {prompt.category}
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div className="w-full max-w-6xl">
+                {/* Category Tabs */}
+                {landingData && (
+                  <div className="flex flex-wrap justify-center gap-2 mb-8">
+                    {landingData.quick_start_questions.map(category => (
+                      <button
+                        key={category.category}
+                        onClick={() => setSelectedCategory(category.category)}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                          selectedCategory === category.category
+                            ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg'
+                            : 'glass text-gray-300 hover:text-white hover:bg-white/10'
+                        }`}
+                      >
+                        <span className="text-lg">{category.icon}</span>
+                        {category.category}
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {/* Quick Start Questions */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                  {getPredefinedPrompts().map((prompt, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => handlePromptSelect(prompt.text)}
+                      disabled={loading}
+                      className="group card-modern p-6 text-left hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <div className="flex items-start gap-4">
+                        <div
+                          className={`w-12 h-12 rounded-xl bg-gradient-to-r ${prompt.gradient} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}
+                        >
+                          <prompt.icon className="w-6 h-6 text-white" />
+                        </div>
+                        <div className="flex-1">
+                          <div className="text-sm text-gray-400 mb-1">
+                            {prompt.category}
+                          </div>
+                          <div className="text-white font-medium group-hover:text-indigo-300 transition-colors">
+                            {prompt.text}
+                          </div>
+                        </div>
                       </div>
-                      <div className="text-white font-medium group-hover:text-indigo-300 transition-colors">
-                        {prompt.text}
+                    </button>
+                  ))}
+                </div>
+
+                {/* System Stats */}
+                {landingData?.system_info && (
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                    <div className="card-modern p-4 text-center">
+                      <Database className="w-8 h-8 text-indigo-400 mx-auto mb-2" />
+                      <div className="text-2xl font-bold text-white">
+                        {landingData.system_info.total_documents.toLocaleString()}
                       </div>
+                      <div className="text-xs text-gray-400">Documents</div>
+                    </div>
+                    <div className="card-modern p-4 text-center">
+                      <Activity className="w-8 h-8 text-green-400 mx-auto mb-2" />
+                      <div className="text-2xl font-bold text-white">
+                        {landingData.system_info.indexed_vectors.toLocaleString()}
+                      </div>
+                      <div className="text-xs text-gray-400">Vectors</div>
+                    </div>
+                    <div className="card-modern p-4 text-center">
+                      <Globe className="w-8 h-8 text-blue-400 mx-auto mb-2" />
+                      <div className="text-2xl font-bold text-white">
+                        {landingData.system_info.knowledge_domains}
+                      </div>
+                      <div className="text-xs text-gray-400">Domains</div>
+                    </div>
+                    <div className="card-modern p-4 text-center">
+                      <Zap className="w-8 h-8 text-yellow-400 mx-auto mb-2" />
+                      <div className="text-2xl font-bold text-white">
+                        {landingData.system_info.response_time}
+                      </div>
+                      <div className="text-xs text-gray-400">Avg Response</div>
                     </div>
                   </div>
-                </button>
-              ))}
-            </div>
+                )}
+
+                {/* Features */}
+                {landingData?.product_info.features && (
+                  <div className="card-modern p-6 mb-8">
+                    <h3 className="text-xl font-semibold text-white mb-4 text-center">
+                      Key Features
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {landingData.product_info.features.map((feature, idx) => (
+                        <div
+                          key={idx}
+                          className="flex items-start gap-3 p-3 rounded-lg glass-dark"
+                        >
+                          <Star className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" />
+                          <span className="text-gray-300 text-sm">
+                            {feature}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Usage Tips */}
+                {landingData?.usage_tips && (
+                  <div className="card-modern p-6">
+                    <h3 className="text-xl font-semibold text-white mb-4 text-center">
+                      💡 Usage Tips
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {landingData.usage_tips.map((tip, idx) => (
+                        <div key={idx} className="glass-dark p-4 rounded-lg">
+                          <h4 className="font-semibold text-indigo-300 mb-2">
+                            {tip.title}
+                          </h4>
+                          <p className="text-gray-400 text-sm mb-2">
+                            {tip.description}
+                          </p>
+                          <div className="text-xs text-gray-500 font-mono bg-gray-800 p-2 rounded">
+                            {tip.example}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         ) : (
           /* Chat Messages */
@@ -425,7 +623,8 @@ export default function ModernChatInterface({
           </form>
           <div className="mt-3 text-center">
             <p className="text-xs text-gray-500">
-              Powered by IndieHash AI • Press Enter to send
+              Powered by {landingData?.product_info.name || 'IndieHash'} AI •
+              Press Enter to send
             </p>
           </div>
         </div>

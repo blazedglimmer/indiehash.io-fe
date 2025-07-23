@@ -4,7 +4,7 @@ import '@/app/landing/landing.css';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import Image from 'next/image';
-import { Sparkles, Globe, Zap, ArrowRight } from 'lucide-react';
+import { Sparkles, Globe, Zap } from 'lucide-react';
 
 function Stars() {
   useEffect(() => {
