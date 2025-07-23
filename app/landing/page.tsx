@@ -103,7 +103,7 @@ export default function LandingPage() {
             href="/resources"
             className="bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-white/20 transition-all hover:scale-105 flex items-center gap-2"
           >
-            <Globe className="w-5 h-5" />
+            {/* <Globe className="w-5 h-5" /> */}
             Explore Resources
           </Link>
         </div>
