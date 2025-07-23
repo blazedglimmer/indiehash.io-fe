@@ -1,1 +1,0 @@
-// Authentication is disabled. This route is no longer in use. 

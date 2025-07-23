@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import ChatInterface from '@/components/ChatInterface';
-import Sidebar from '@/components/Sidebar';
+import ModernChatInterface from '@/components/modern-chat-interface';
+import ModernSidebar from '@/components/modern-sidebar';
 import { createNewChat, getAllChats } from '@/utils/storage';
 import { Chat } from '@/types';
 
@@ -17,7 +17,7 @@ export default function ChatPage() {
 
     // If there are chats, set the active chat to the most recent one
     if (loadedChats.length > 0) {
-      setActiveChatId(loadedChats[0].id);
+      setActiveChatId(loadedChats[0]?.id ?? null);
     } else {
       // If no chats exist, create a new one
       handleNewChat();
@@ -35,17 +35,14 @@ export default function ChatPage() {
   const activeChat = chats.find(chat => chat.id === activeChatId) || null;
 
   return (
-    <div className="flex h-screen bg-gray-900 text-white">
-      <Sidebar 
-        chats={chats} 
-        activeChat={activeChatId} 
-        onSelectChat={setActiveChatId} 
+    <div className="flex h-screen bg-gradient-to-br from-gray-900 via-gray-900 to-indigo-900/20 text-white overflow-hidden">
+      <ModernSidebar
+        chats={chats}
+        activeChat={activeChatId}
+        onSelectChat={setActiveChatId}
         onNewChat={handleNewChat}
       />
-      <ChatInterface 
-        chat={activeChat} 
-        setChats={setChats}
-      />
+      <ModernChatInterface chat={activeChat} setChats={setChats} />
     </div>
   );
-} 
+}
