@@ -181,9 +181,34 @@ export default function ModernSidebar({
                             </h4>
                             <p className="text-xs text-gray-500 mt-1 truncate">
                               {chat.messages.length > 0
-                                ? chat.messages[
-                                    chat.messages.length - 1
-                                  ]?.content.substring(0, 50) + '...'
+                                ? (() => {
+                                    const lastMessage =
+                                      chat.messages[chat.messages.length - 1];
+                                    const content = lastMessage?.content;
+
+                                    // Handle different content types
+                                    if (typeof content === 'string') {
+                                      return content.length > 50
+                                        ? content.substring(0, 50) + '...'
+                                        : content;
+                                    } else if (
+                                      content &&
+                                      typeof content === 'object'
+                                    ) {
+                                      // If content is an object, try to extract text from common properties
+                                      const text =
+                                        content.text ||
+                                        content.message ||
+                                        JSON.stringify(content);
+                                      return typeof text === 'string'
+                                        ? text.length > 50
+                                          ? text.substring(0, 50) + '...'
+                                          : text
+                                        : 'Message content';
+                                    } else {
+                                      return 'Message content';
+                                    }
+                                  })()
                                 : 'No messages yet'}
                             </p>
                           </div>
