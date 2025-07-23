@@ -42,24 +42,64 @@ export interface QueryRequest {
   limit?: number;
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
-const API_SECRET = process.env.NEXT_PUBLIC_API_SECRET || 'my-api-secret';
+// For client-side API calls to Next.js API routes, use relative paths
+// For server-side calls to external APIs, use full URLs
 
-export async function queryEnhanced(
-  request: QueryRequest
-): Promise<ApiResponse<EnhancedQueryData>> {
+// Helper function to build query string
+function buildQueryString(params: Record<string, any>): string {
+  const searchParams = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== null) {
+      searchParams.append(key, String(value));
+    }
+  });
+  return searchParams.toString() ? `?${searchParams.toString()}` : '';
+}
+
+// Generic API client function with proper TypeScript handling
+async function apiRequest<T>(
+  endpoint: string,
+  options: {
+    method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+    body?: any;
+    params?: Record<string, any>;
+    signal?: AbortSignal;
+  } = {}
+): Promise<ApiResponse<T>> {
+  const { method = 'GET', body, params, signal } = options;
+
+  // For Next.js API routes, use relative paths (no base URL)
+  let fullUrl = endpoint;
+  if (params && method === 'GET') {
+    fullUrl += buildQueryString(params);
+  }
+
+  // Create fetch options without signal first
+  const baseRequestInit: RequestInit = {
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  // Add body if needed
+  if (body && method !== 'GET') {
+    baseRequestInit.body = JSON.stringify(body);
+  }
+
+  // Handle signal properly for exactOptionalPropertyTypes
+  let finalRequestInit: RequestInit;
+  if (signal) {
+    finalRequestInit = {
+      ...baseRequestInit,
+      signal: signal, // TypeScript knows this is AbortSignal, not undefined
+    };
+  } else {
+    finalRequestInit = baseRequestInit; // No signal property at all
+  }
+
   try {
-    const response = await fetch(`${API_BASE_URL}/api/v1/query/enhanced`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${API_SECRET}`,
-      },
-      body: JSON.stringify({
-        question: request.question,
-        limit: request.limit || 3,
-      }),
-    });
+    const response = await fetch(fullUrl, finalRequestInit);
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -71,6 +111,22 @@ export async function queryEnhanced(
     console.error('API Error:', error);
     throw error;
   }
+}
+
+// Client-side function that calls your secure API route
+export async function queryEnhanced(
+  request: QueryRequest,
+  signal?: AbortSignal
+): Promise<ApiResponse<EnhancedQueryData>> {
+  // Call your Next.js API route instead of external API directly
+  return apiRequest<EnhancedQueryData>('/api/query-enhanced', {
+    method: 'POST',
+    body: {
+      question: request.question,
+      limit: request.limit || 3,
+    },
+    ...(signal && { signal }),
+  });
 }
 
 // Mock function for development/fallback
