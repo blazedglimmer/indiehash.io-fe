@@ -199,11 +199,11 @@ export function getMockResponse(
     data: {
       question,
       summary:
-        'Based on the available context, here are some curated resources to help you learn effectively.',
+        'Here are some excellent YouTube videos and resources to help you explore and learn about your topic. Our curated collection includes the best content from trusted creators.',
       similar_results: [
         {
           id: '550e8400-e29b-41d4-a716-446655440001',
-          text: 'Comprehensive learning resources for modern development',
+          text: 'Curated video content from top creators and educators in the field',
           score: 0.892,
           relevance_percent: 100.0,
           created_at: '2025-01-21T16:30:00Z',
@@ -211,40 +211,42 @@ export function getMockResponse(
           processing_time_ms: 45.2,
           metadata: {
             category: 'educational',
-            domain: 'programming',
-            tags: ['learning', 'resources', 'development'],
+            domain: 'video-content',
+            tags: ['youtube', 'tutorials', 'educational', 'curated'],
           },
           all_payload: {
-            text: 'Comprehensive learning resources for modern development',
+            text: 'Curated video content from top creators and educators in the field',
             created_at: '2025-01-21T16:30:00Z',
             metadata: {
               category: 'educational',
-              domain: 'programming',
+              domain: 'video-content',
             },
           },
         },
       ],
-      enriched_content: `Here are some excellent resources to help you learn:
+      enriched_content: `Here are some great YouTube videos to get you inspired for an unforgettable journey:
 
-**Online Courses & Tutorials**
-- Interactive coding platforms with hands-on exercises
-- Video tutorials from industry experts
-- Structured learning paths for beginners to advanced
+**Featured Video Picks**
 
-**Documentation & Guides**
-- Official documentation with examples
-- Community-driven guides and best practices
-- Step-by-step tutorials for practical projects
+- **"Ultimate Travel Guide | Best Destinations 2024"**  
+  Experience stunning visuals and expert travel tips from seasoned adventurers — perfect if you're planning your next getaway.  
+  [Watch here](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
 
-**Practice & Projects**
-- Coding challenges and exercises
-- Real-world project ideas
-- Open source contributions
+- **"Complete Beginner's Tutorial | Step by Step Guide"**  
+  A comprehensive walkthrough covering everything you need to know, explained in simple terms with practical examples.  
+  [Watch here](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
 
-**Community & Support**
-- Developer forums and communities
-- Mentorship programs
-- Study groups and meetups`,
+- **"Pro Tips & Advanced Techniques | Expert Insights"**  
+  Learn advanced strategies and insider secrets from industry professionals who share their years of experience.  
+  [Watch here](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+
+**Additional Resources**
+
+- **Community Forums & Discussion**  
+  Join active communities where you can ask questions, share experiences, and connect with like-minded individuals.
+
+- **Recommended Tools & Equipment**  
+  Discover the essential tools and gear recommended by experts to enhance your experience and achieve better results.`,
       total_results: 3,
       request_id: '550e8400-e29b-41d4-a716-446655440001',
     },
