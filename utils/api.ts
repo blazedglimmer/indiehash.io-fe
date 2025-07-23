@@ -24,6 +24,8 @@ export interface SimilarResult {
     metadata: {
       category: string;
       domain: string;
+      video: { tags: string[]; duration: number } | null;
+      content_type: string;
     };
   };
 }
@@ -220,6 +222,8 @@ export function getMockResponse(
             metadata: {
               category: 'educational',
               domain: 'video-content',
+              video: { tags: [''], duration: 1900 },
+              content_type: 'video',
             },
           },
         },
