@@ -19,7 +19,6 @@ import {
   Globe,
   BookOpen,
   Code,
-  Lightbulb,
   TrendingUp,
   Clock,
   Tag,
@@ -28,6 +27,15 @@ import {
   Star,
   Database,
   Activity,
+  RefreshCw,
+  ExternalLink,
+  ThumbsUp,
+  Share2,
+  Bookmark,
+  Eye,
+  Video,
+  AlertTriangle,
+  MessageSquare,
 } from 'lucide-react';
 
 interface ModernChatInterfaceProps {
@@ -162,7 +170,7 @@ export default function ModernChatInterface({
 
       const aiMessage: Message = {
         role: 'assistant',
-        content: JSON.stringify(response.data),
+        content: response.data,
         timestamp: new Date().toISOString(),
       };
 
@@ -204,12 +212,202 @@ export default function ModernChatInterface({
     }
   };
 
-  const renderAssistantMessage = (content: string) => {
+  // Extract YouTube video ID from URL
+  //   const extractYouTubeId = (url: string): string | null => {
+  //     const regex =
+  //       /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+  //     const match = url.match(regex);
+  //     return match ? match[1] || null : null;
+  //   };
+
+  //   // Extract URLs from text
+  //   const extractUrls = (text: string): string[] => {
+  //     const urlRegex = /(https?:\/\/[^\s]+)/g;
+  //     return text.match(urlRegex) || [];
+  //   };
+
+  //   // Parse markdown-like content
+  //   const parseContent = (content: string) => {
+  //     const lines = content.split('\n');
+  //     const sections: any[] = [];
+  //     let currentSection: any = null;
+
+  //     lines.forEach((line, index) => {
+  //       const trimmedLine = line.trim();
+
+  //       if (trimmedLine.startsWith('**') && trimmedLine.endsWith('**')) {
+  //         // Section header
+  //         if (currentSection) {
+  //           sections.push(currentSection);
+  //         }
+  //         currentSection = {
+  //           type: 'section',
+  //           title: trimmedLine.replace(/\*\*/g, ''),
+  //           content: [],
+  //           urls: [],
+  //           videos: [],
+  //         };
+  //       } else if (trimmedLine.startsWith('- ')) {
+  //         // List item
+  //         if (currentSection) {
+  //           const urls = extractUrls(trimmedLine);
+  //           const videoUrls = urls.filter(
+  //             url => url.includes('youtube.com') || url.includes('youtu.be')
+  //           );
+
+  //           currentSection.content.push({
+  //             type: 'list-item',
+  //             text: trimmedLine.substring(2),
+  //             urls: urls,
+  //             videos: videoUrls,
+  //           });
+
+  //           currentSection.urls.push(...urls);
+  //           currentSection.videos.push(...videoUrls);
+  //         }
+  //       } else if (trimmedLine && currentSection) {
+  //         // Regular paragraph
+  //         const urls = extractUrls(trimmedLine);
+  //         const videoUrls = urls.filter(
+  //           url => url.includes('youtube.com') || url.includes('youtu.be')
+  //         );
+
+  //         currentSection.content.push({
+  //           type: 'paragraph',
+  //           text: trimmedLine,
+  //           urls: urls,
+  //           videos: videoUrls,
+  //         });
+
+  //         currentSection.urls.push(...urls);
+  //         currentSection.videos.push(...videoUrls);
+  //       }
+  //     });
+
+  //     if (currentSection) {
+  //       sections.push(currentSection);
+  //     }
+
+  //     return sections;
+  //   };
+
+  //   // Extract video metadata from URL
+  //   const getVideoMetadata = (url: string, title?: string) => {
+  //     const videoId = extractYouTubeId(url);
+  //     if (!videoId) return null;
+
+  //     return {
+  //       id: videoId,
+  //       url: url,
+  //       title: title || 'YouTube Video',
+  //       thumbnail: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+  //       embedUrl: `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`,
+  //     };
+  //   };
+
+  //   // Render YouTube video embed
+  //   const renderYouTubeEmbed = (
+  //     videoId: string,
+  //     title?: string,
+  //     index?: number
+  //   ) => (
+  //     <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black group mb-6">
+  //       <iframe
+  //         src={`https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&showinfo=0`}
+  //         title={title || 'YouTube video'}
+  //         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  //         allowFullScreen
+  //         className="w-full h-full"
+  //       />
+  //       {index !== undefined && (
+  //         <div className="absolute top-4 left-4 w-8 h-8 rounded-full bg-gradient-to-r from-red-500 to-pink-500 flex items-center justify-center text-white font-bold text-sm">
+  //           {index + 1}
+  //         </div>
+  //       )}
+  //       <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
+  //         <button className="p-2 rounded-lg bg-black/70 backdrop-blur-sm text-white hover:bg-black/90 transition-colors">
+  //           <Bookmark className="w-4 h-4" />
+  //         </button>
+  //         <button className="p-2 rounded-lg bg-black/70 backdrop-blur-sm text-white hover:bg-black/90 transition-colors">
+  //           <ExternalLink className="w-4 h-4" />
+  //         </button>
+  //       </div>
+  //     </div>
+  //   );
+
+  // Render video card with metadata
+  //   const renderVideoCard = (video: any, index: number) => (
+  //     <div key={index} className="card-modern p-6 mb-6">
+  //       <div className="flex items-start gap-4 mb-4">
+  //         <div className="w-10 h-10 rounded-full bg-gradient-to-r from-red-500 to-pink-500 flex items-center justify-center text-white font-bold">
+  //           {index + 1}
+  //         </div>
+  //         <div className="flex-1">
+  //           <h4 className="text-lg font-semibold text-white mb-2">
+  //             {video.title || `Featured Video #${index + 1}`}
+  //           </h4>
+  //           <p className="text-gray-400 text-sm mb-4">
+  //             {video.description ||
+  //               'Curated content to help you learn and explore'}
+  //           </p>
+  //         </div>
+  //         <div className="flex items-center gap-2">
+  //           <button className="p-2 rounded-lg glass hover:bg-white/10 transition-colors">
+  //             <Bookmark className="w-4 h-4 text-gray-400" />
+  //           </button>
+  //           <button className="p-2 rounded-lg glass hover:bg-white/10 transition-colors">
+  //             <Share2 className="w-4 h-4 text-gray-400" />
+  //           </button>
+  //         </div>
+  //       </div>
+  //       {renderYouTubeEmbed(video.id, video.title, index)}
+  //     </div>
+  //   );
+
+  const renderAssistantMessage = (content: string | any) => {
     try {
-      const data: EnhancedQueryData = JSON.parse(content);
+      // If content is already an object, use it directly
+      const data: EnhancedQueryData =
+        typeof content === 'string' ? JSON.parse(content) : content;
+
+      // Extract video information from similar_results
+      const extractVideoInfo = (result: any) => {
+        const metadata = result.all_payload?.metadata;
+        if (metadata?.content_type === 'youtube_video' && metadata?.video) {
+          return {
+            id: metadata.video.video_id,
+            title: metadata.video.title,
+            description: metadata.video.description,
+            thumbnail: metadata.video.thumbnail_url,
+            channel: metadata.video.channel_title,
+            views: metadata.video.view_count,
+            likes: metadata.video.like_count,
+            comments: metadata.video.comment_count,
+            duration: metadata.video.duration,
+            publishedAt: metadata.video.published_at,
+            tags: metadata.video.tags || [],
+            embedUrl: `https://www.youtube.com/embed/${metadata.video.video_id}?rel=0&modestbranding=1`,
+          };
+        }
+        return null;
+      };
+
+      // Extract videos from similar results
+      const videos =
+        data.similar_results?.map(extractVideoInfo).filter(Boolean) || [];
+
+      // Create a beautiful summary if not provided
+      const summary =
+        data.summary ||
+        `Here are some curated ${
+          videos.length > 0 ? 'video' : ''
+        } resources to help you with "${
+          data.question
+        }". Our AI has found the most relevant content from trusted creators.`;
 
       return (
         <div className="w-full max-w-4xl mx-auto">
+          {/* Main Content Card */}
           <div className="card-modern p-8 mb-6">
             {/* Source Tabs */}
             <div className="flex gap-2 mb-6 overflow-x-auto">
@@ -230,62 +428,154 @@ export default function ModernChatInterface({
             </div>
 
             {/* Summary Section */}
-            <div className="mb-8">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center">
-                  <Sparkles className="w-4 h-4 text-white" />
+            {summary && (
+              <div className="mb-8">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center">
+                    <Sparkles className="w-4 h-4 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-white">
+                    AI Summary
+                  </h3>
                 </div>
-                <h3 className="text-lg font-semibold text-white">AI Summary</h3>
+                <div className="glass-dark p-6 rounded-2xl">
+                  <p className="text-gray-200 leading-relaxed text-lg">
+                    {summary}
+                  </p>
+                </div>
               </div>
-              <p className="text-gray-300 leading-relaxed">{data.summary}</p>
-            </div>
+            )}
+
+            {/* Featured Videos Section */}
+            {videos.length > 0 && (
+              <div className="mb-8">
+                <div className="flex items-center gap-2 mb-6">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-red-500 to-pink-500 flex items-center justify-center">
+                    <Video className="w-4 h-4 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-white">
+                    Featured Video Picks
+                  </h3>
+                </div>
+
+                <div className="space-y-6">
+                  {videos.slice(0, 3).map((video, idx) => (
+                    <div key={idx} className="card-modern p-6 mb-6">
+                      <div className="flex items-start gap-4 mb-4">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-red-500 to-pink-500 flex items-center justify-center text-white font-bold">
+                          {idx + 1}
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="text-lg font-semibold text-white mb-2">
+                            {video?.title}
+                          </h4>
+                          <p className="text-gray-400 text-sm mb-2">
+                            By {video?.channel} •{' '}
+                            {video?.views?.toLocaleString()} views
+                          </p>
+                          <p className="text-gray-300 text-sm mb-4 line-clamp-3">
+                            {video?.description?.substring(0, 200)}...
+                          </p>
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {video?.tags
+                              ?.slice(0, 4)
+                              .map((tag: string, tagIdx: number) => (
+                                <span
+                                  key={tagIdx}
+                                  className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs"
+                                >
+                                  <Tag className="w-3 h-3" />
+                                  {tag}
+                                </span>
+                              ))}
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button className="p-2 rounded-lg glass hover:bg-white/10 transition-colors">
+                            <Bookmark className="w-4 h-4 text-gray-400" />
+                          </button>
+                          <button className="p-2 rounded-lg glass hover:bg-white/10 transition-colors">
+                            <Share2 className="w-4 h-4 text-gray-400" />
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* YouTube Embed */}
+                      <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black group">
+                        <iframe
+                          src={video?.embedUrl}
+                          title={video?.title}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          className="w-full h-full"
+                        />
+                        <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
+                          <button className="p-2 rounded-lg bg-black/70 backdrop-blur-sm text-white hover:bg-black/90 transition-colors">
+                            <ExternalLink className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Video Stats */}
+                      <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/10">
+                        <div className="flex items-center gap-4 text-sm text-gray-400">
+                          <span className="flex items-center gap-1">
+                            <Eye className="w-4 h-4" />
+                            {video?.views?.toLocaleString()}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <ThumbsUp className="w-4 h-4" />
+                            {video?.likes?.toLocaleString()}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <MessageSquare className="w-4 h-4" />
+                            {video?.comments?.toLocaleString()}
+                          </span>
+                        </div>
+                        <span className="text-xs text-gray-500">
+                          {new Date(video?.publishedAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Similar Results */}
             {data.similar_results && data.similar_results.length > 0 && (
               <div className="mb-8">
-                <div className="flex items-center gap-2 mb-4">
-                  <TrendingUp className="w-5 h-5 text-amber-400" />
+                <div className="flex items-center gap-2 mb-6">
+                  <Globe className="w-5 h-5 text-amber-400" />
                   <h3 className="text-lg font-semibold text-white">
                     Related Results
                   </h3>
                 </div>
                 <div className="grid gap-4">
-                  {data.similar_results.map((result, idx) => (
-                    <div key={result.id} className="glass-dark p-4 rounded-xl">
-                      <div className="flex items-start justify-between mb-2">
-                        <div className="flex items-center gap-2">
-                          <div className="w-6 h-6 rounded-full bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center text-xs font-bold text-white">
+                  {data.similar_results.slice(0, 5).map((result, idx) => (
+                    <div key={result.id} className="glass-dark p-6 rounded-xl">
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center text-sm font-bold text-white">
                             {idx + 1}
                           </div>
-                          <span className="text-sm text-gray-400">
-                            {result.relevance_percent.toFixed(1)}% match
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Clock className="w-4 h-4 text-gray-500" />
-                          <span className="text-xs text-gray-500">
-                            {result.processing_time_ms}ms
-                          </span>
-                        </div>
-                      </div>
-                      <p className="text-gray-200 mb-3">{result.text}</p>
-                      <div className="flex items-center justify-between">
-                        <div className="flex flex-wrap gap-1">
-                          {result.metadata.tags.map(tag => (
-                            <span
-                              key={tag}
-                              className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs"
-                            >
-                              <Tag className="w-3 h-3" />
-                              {tag}
+                          <div>
+                            <span className="text-sm font-medium text-green-400">
+                              {result.relevance_percent.toFixed(1)}% match
                             </span>
-                          ))}
+                            <div className="flex items-center gap-2 mt-1">
+                              <Clock className="w-3 h-3 text-gray-500" />
+                              <span className="text-xs text-gray-500">
+                                {result.processing_time_ms}ms
+                              </span>
+                            </div>
+                          </div>
                         </div>
                         <button
                           onClick={() =>
                             copyToClipboard(result.text, result.id)
                           }
-                          className="p-1 rounded hover:bg-white/10 transition-colors"
+                          className="p-2 rounded-lg hover:bg-white/10 transition-colors"
                         >
                           {copiedId === result.id ? (
                             <Check className="w-4 h-4 text-green-400" />
@@ -294,39 +584,119 @@ export default function ModernChatInterface({
                           )}
                         </button>
                       </div>
+
+                      <p className="text-gray-200 mb-4 leading-relaxed line-clamp-4">
+                        {result.text}
+                      </p>
+
+                      <div className="flex items-center justify-between">
+                        <div className="flex flex-wrap gap-2">
+                          {result.all_payload?.metadata?.video?.tags
+                            ?.slice(0, 3)
+                            .map((tag: string) => (
+                              <span
+                                key={tag}
+                                className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs"
+                              >
+                                <Tag className="w-3 h-3" />
+                                {tag}
+                              </span>
+                            )) || []}
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          {result.all_payload?.metadata?.content_type ||
+                            'content'}
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
             )}
 
-            {/* Enriched Content */}
-            <div>
+            {/* Footer with metadata */}
+            <div className="mt-8 pt-6 border-t border-white/10">
               <div className="flex items-center gap-2 mb-4">
-                <Lightbulb className="w-5 h-5 text-yellow-400" />
-                <h3 className="text-lg font-semibold text-white">
-                  Detailed Guide
-                </h3>
+                <Activity className="w-4 h-4 text-gray-400" />
+                <span className="text-sm text-gray-400">Response Metadata</span>
               </div>
-              <div className="prose prose-invert max-w-none">
-                <div className="text-gray-300 leading-relaxed whitespace-pre-line">
-                  {data.enriched_content}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="glass-dark p-3 rounded-lg text-center">
+                  <div className="text-lg font-bold text-white">
+                    {data.total_results || 0}
+                  </div>
+                  <div className="text-xs text-gray-400">Results</div>
+                </div>
+                <div className="glass-dark p-3 rounded-lg text-center">
+                  <div className="text-lg font-bold text-white">
+                    {videos.length}
+                  </div>
+                  <div className="text-xs text-gray-400">Videos</div>
+                </div>
+                <div className="glass-dark p-3 rounded-lg text-center">
+                  <div className="text-lg font-bold text-white">
+                    {data.similar_results?.length || 0}
+                  </div>
+                  <div className="text-xs text-gray-400">Sources</div>
+                </div>
+                <div className="glass-dark p-3 rounded-lg text-center">
+                  <div className="text-lg font-bold text-white">
+                    {data.similar_results?.[0]?.processing_time_ms.toFixed(0) ||
+                      0}
+                    ms
+                  </div>
+                  <div className="text-xs text-gray-400">Response Time</div>
                 </div>
               </div>
+              <div className="mt-4 text-center">
+                <span className="text-xs text-gray-500">
+                  Request ID: {data.request_id}
+                </span>
+              </div>
             </div>
+          </div>
 
-            {/* Footer */}
-            <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-gray-500">
-              <span>Request ID: {data.request_id}</span>
-              <span>{data.total_results} results processed</span>
-            </div>
+          {/* Action Buttons */}
+          <div className="flex items-center justify-center gap-4 mb-8">
+            <button className="flex items-center gap-2 px-6 py-3 rounded-full glass hover:bg-white/10 transition-colors">
+              <ThumbsUp className="w-4 h-4 text-gray-400" />
+              <span className="text-gray-300">Helpful</span>
+            </button>
+            <button className="flex items-center gap-2 px-6 py-3 rounded-full glass hover:bg-white/10 transition-colors">
+              <Share2 className="w-4 h-4 text-gray-400" />
+              <span className="text-gray-300">Share</span>
+            </button>
+            <button className="flex items-center gap-2 px-6 py-3 rounded-full glass hover:bg-white/10 transition-colors">
+              <Bookmark className="w-4 h-4 text-gray-400" />
+              <span className="text-gray-300">Save</span>
+            </button>
+            <button className="flex items-center gap-2 px-6 py-3 rounded-full glass hover:bg-white/10 transition-colors">
+              <RefreshCw className="w-4 h-4 text-gray-400" />
+              <span className="text-gray-300">Regenerate</span>
+            </button>
           </div>
         </div>
       );
     } catch (error) {
+      console.error('Error parsing assistant message:', error);
+      // Fallback to display raw content if JSON parsing fails
       return (
-        <div className="card-modern p-6">
-          <p className="text-gray-300">{content}</p>
+        <div className="w-full max-w-4xl mx-auto">
+          <div className="card-modern p-8">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-r from-red-500 to-orange-500 flex items-center justify-center">
+                <AlertTriangle className="w-4 h-4 text-white" />
+              </div>
+              <h3 className="text-lg font-semibold text-white">Response</h3>
+            </div>
+            <div className="glass-dark p-6 rounded-2xl">
+              <pre className="text-gray-200 whitespace-pre-wrap text-sm leading-relaxed overflow-x-auto">
+                {typeof content === 'string'
+                  ? content
+                  : JSON.stringify(content, null, 2)}
+              </pre>
+            </div>
+          </div>
         </div>
       );
     }
