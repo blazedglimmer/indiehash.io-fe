@@ -1,7 +1,7 @@
 'use client';
 
 import { Chat } from '@/types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Plus,
   MessageSquare,
@@ -36,6 +36,34 @@ export default function ModernSidebar({
 }: ModernSidebarProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Close mobile sidebar when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (mobileOpen) {
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar && !sidebar.contains(event.target as Node)) {
+          setMobileOpen(false);
+        }
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [mobileOpen]);
+
+  // Prevent body scroll when mobile sidebar is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [mobileOpen]);
 
   // Group chats by date
   const groupedChats: GroupedChats = chats.reduce(
@@ -86,21 +114,23 @@ export default function ModernSidebar({
   );
 
   const SidebarContent = () => (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col mobile-scroll">
       {/* Header */}
-      <div className="p-6 border-b border-white/10">
+      <div className="p-4 md:p-6 border-b border-white/10">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center">
-              <MessageSquare className="w-4 h-4 text-white" />
+            <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center">
+              <MessageSquare className="w-3 h-3 md:w-4 md:h-4 text-white" />
             </div>
             <div className="sidebar-content">
-              <h1 className="text-lg font-bold gradient-text">IndieHash</h1>
+              <h1 className="text-base md:text-lg font-bold gradient-text">
+                IndieHash
+              </h1>
             </div>
           </div>
           <button
             onClick={() => setMobileOpen(false)}
-            className="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors"
+            className="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors mobile-touch"
           >
             <X className="w-5 h-5 text-gray-400" />
           </button>
@@ -109,7 +139,7 @@ export default function ModernSidebar({
         {/* New Chat Button */}
         <button
           onClick={onNewChat}
-          className="btn-primary w-full py-3 px-4 rounded-xl flex items-center justify-center gap-2 text-sm font-medium"
+          className="btn-primary w-full py-2 md:py-3 px-3 md:px-4 rounded-xl flex items-center justify-center gap-2 text-sm font-medium mobile-touch"
         >
           <Plus className="w-4 h-4" />
           <span className="sidebar-content">New Chat</span>
@@ -117,7 +147,7 @@ export default function ModernSidebar({
       </div>
 
       {/* Search */}
-      <div className="p-4 border-b border-white/10">
+      <div className="p-3 md:p-4 border-b border-white/10">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input
@@ -125,34 +155,34 @@ export default function ModernSidebar({
             placeholder="Search chats..."
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
-            className="input-modern w-full pl-10 pr-4 py-2 text-sm"
+            className="input-modern w-full pl-10 pr-4 py-2 text-sm mobile-input"
           />
         </div>
       </div>
 
       {/* Navigation */}
-      <div className="px-4 py-2 border-b border-white/10">
+      <div className="px-3 md:px-4 py-2 border-b border-white/10">
         <div className="sidebar-content space-y-1">
           <button className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition-colors">
             <Globe className="w-4 h-4" />
-            <span>Resources</span>
+            <span className="text-sm md:text-base">Resources</span>
           </button>
           <button className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition-colors">
             <Star className="w-4 h-4" />
-            <span>Favorites</span>
+            <span className="text-sm md:text-base">Favorites</span>
           </button>
         </div>
       </div>
 
       {/* Chat History */}
-      <div className="flex-1 overflow-y-auto p-4">
+      <div className="flex-1 overflow-y-auto p-3 md:p-4 mobile-scroll">
         <div className="sidebar-content space-y-4">
           {Object.entries(filteredGroupedChats).map(
             ([groupName, groupChats]) => (
               <div key={groupName}>
                 <div className="flex items-center gap-2 px-2 py-1 mb-2">
                   <Clock className="w-3 h-3 text-gray-500" />
-                  <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mobile-text">
                     {groupName}
                   </h3>
                 </div>
@@ -167,11 +197,11 @@ export default function ModernSidebar({
                       }`}
                       onClick={() => onSelectChat(chat.id)}
                     >
-                      <div className="p-3">
+                      <div className="p-2 md:p-3">
                         <div className="flex items-start justify-between">
                           <div className="flex-1 min-w-0">
                             <h4
-                              className={`text-sm font-medium truncate ${
+                              className={`text-xs md:text-sm font-medium truncate ${
                                 activeChat === chat.id
                                   ? 'text-white'
                                   : 'text-gray-300'
@@ -179,7 +209,7 @@ export default function ModernSidebar({
                             >
                               {chat.title || 'New Chat'}
                             </h4>
-                            <p className="text-xs text-gray-500 mt-1 truncate">
+                            <p className="text-xs text-gray-500 mt-1 truncate mobile-text">
                               {chat.messages.length > 0
                                 ? (() => {
                                     const lastMessage =
@@ -212,7 +242,7 @@ export default function ModernSidebar({
                                 : 'No messages yet'}
                             </p>
                           </div>
-                          <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <div className="flex items-center gap-1 opacity-0 md:group-hover:opacity-100 transition-opacity">
                             <button className="p-1 rounded hover:bg-white/10 transition-colors">
                               <Edit3 className="w-3 h-3 text-gray-400" />
                             </button>
@@ -221,11 +251,11 @@ export default function ModernSidebar({
                             </button>
                           </div>
                         </div>
-                        <div className="flex items-center justify-between mt-2">
-                          <span className="text-xs text-gray-500">
+                        <div className="flex items-center justify-between mt-1 md:mt-2">
+                          <span className="text-xs text-gray-500 mobile-text">
                             {new Date(chat.updatedAt).toLocaleDateString()}
                           </span>
-                          <span className="text-xs text-gray-500">
+                          <span className="text-xs text-gray-500 mobile-text">
                             {chat.messages.length} messages
                           </span>
                         </div>
@@ -240,15 +270,19 @@ export default function ModernSidebar({
       </div>
 
       {/* Footer */}
-      <div className="p-4 border-t border-white/10">
+      <div className="p-3 md:p-4 border-t border-white/10">
         <div className="sidebar-content">
           <div className="flex items-center gap-3 p-3 rounded-lg glass-dark">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center">
-              <User className="w-4 h-4 text-white" />
+            <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center">
+              <User className="w-3 h-3 md:w-4 md:h-4 text-white" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-white truncate">User</p>
-              <p className="text-xs text-gray-400 truncate">user@example.com</p>
+              <p className="text-xs md:text-sm font-medium text-white truncate">
+                User
+              </p>
+              <p className="text-xs text-gray-400 truncate mobile-text">
+                user@example.com
+              </p>
             </div>
             <button className="p-1 rounded hover:bg-white/10 transition-colors">
               <Settings className="w-4 h-4 text-gray-400" />
@@ -264,9 +298,9 @@ export default function ModernSidebar({
       {/* Mobile Menu Button */}
       <button
         onClick={() => setMobileOpen(true)}
-        className="md:hidden fixed top-4 left-4 z-50 p-2 rounded-lg glass-dark"
+        className="md:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-gray-800/90 backdrop-blur-sm border border-gray-700"
       >
-        <Menu className="w-5 h-5 text-white" />
+        <Menu className="w-6 h-6 text-white" />
       </button>
 
       {/* Mobile Overlay */}
@@ -280,13 +314,16 @@ export default function ModernSidebar({
       {/* Sidebar */}
       <div
         className={`
-          sidebar glass-dark border-r border-white/10 transition-all duration-300 ease-in-out
-          ${mobileOpen ? 'mobile-open' : ''}
+          fixed md:relative h-full bg-gray-900/95 backdrop-blur-xl border-r border-gray-700 
+          transition-all duration-300 ease-in-out z-50
+          ${
+            mobileOpen
+              ? 'translate-x-0 w-80'
+              : '-translate-x-full md:translate-x-0 w-80'
+          }
         `}
       >
-        <div className="sidebar-content">
-          <SidebarContent />
-        </div>
+        <SidebarContent />
       </div>
     </>
   );

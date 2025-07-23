@@ -406,22 +406,22 @@ export default function ModernChatInterface({
         }". Our AI has found the most relevant content from trusted creators.`;
 
       return (
-        <div className="w-full max-w-4xl mx-auto">
+        <div className="w-full max-w-4xl mx-auto px-4 md:px-0">
           {/* Main Content Card */}
-          <div className="card-modern p-8 mb-6">
+          <div className="card-modern p-4 md:p-8 mb-4 md:mb-6">
             {/* Source Tabs */}
-            <div className="flex gap-2 mb-6 overflow-x-auto">
+            <div className="flex gap-2 mb-4 md:mb-6 overflow-x-auto pb-2">
               {sourceCategories.map((source, idx) => (
                 <button
                   key={source.label}
                   onClick={() => setActiveTab(idx)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
+                  className={`flex items-center gap-2 px-3 md:px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap mobile-touch ${
                     activeTab === idx
                       ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg'
                       : 'glass text-gray-300 hover:text-white hover:bg-white/10'
                   }`}
                 >
-                  <source.icon className="w-4 h-4" />
+                  <source.icon className="w-3 h-3 md:w-4 md:h-4" />
                   {source.label}
                 </button>
               ))}
@@ -429,25 +429,27 @@ export default function ModernChatInterface({
 
             {/* Summary Section */}
             {summary && (
-              <div className="mb-8">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center">
-                    <Sparkles className="w-4 h-4 text-white" />
+              <div className="mb-6 md:mb-8">
+                <div className="flex items-center gap-2 mb-3 md:mb-4">
+                  <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center">
+                    <Sparkles className="w-3 h-3 md:w-4 md:h-4 text-white" />
                   </div>
-                  <h3 className="text-lg font-semibold text-white">
+                  <h3 className="text-base md:text-lg font-semibold text-white">
                     AI Summary
                   </h3>
                 </div>
-                <div className="glass-dark p-6 rounded-2xl mb-4">
-                  <p className="text-gray-200 leading-relaxed text-lg">
+                <div className="glass-dark p-4 md:p-6 rounded-2xl mb-3 md:mb-4">
+                  <p className="text-gray-200 leading-relaxed text-sm md:text-lg">
                     {summary}
                   </p>
                 </div>
                 {/* Enriched Content Section */}
                 {data.enriched_content && (
-                  <div className="glass-dark p-6 rounded-2xl border border-indigo-500/30">
-                    <h4 className="text-md font-semibold text-indigo-300 mb-2">Enriched Insights</h4>
-                    <p className="text-gray-300 leading-relaxed text-base">
+                  <div className="glass-dark p-4 md:p-6 rounded-2xl border border-indigo-500/30">
+                    <h4 className="text-sm md:text-md font-semibold text-indigo-300 mb-2">
+                      Enriched Insights
+                    </h4>
+                    <p className="text-gray-300 leading-relaxed text-sm md:text-base">
                       {data.enriched_content}
                     </p>
                   </div>
@@ -457,41 +459,44 @@ export default function ModernChatInterface({
 
             {/* Featured Videos Section */}
             {videos.length > 0 && (
-              <div className="mb-8">
-                <div className="flex items-center gap-2 mb-6">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-red-500 to-pink-500 flex items-center justify-center">
-                    <Video className="w-4 h-4 text-white" />
+              <div className="mb-6 md:mb-8">
+                <div className="flex items-center gap-2 mb-4 md:mb-6">
+                  <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gradient-to-r from-red-500 to-pink-500 flex items-center justify-center">
+                    <Video className="w-3 h-3 md:w-4 md:h-4 text-white" />
                   </div>
-                  <h3 className="text-lg font-semibold text-white">
+                  <h3 className="text-base md:text-lg font-semibold text-white">
                     Featured Video Picks
                   </h3>
                 </div>
 
-                <div className="space-y-6">
+                <div className="space-y-4 md:space-y-6">
                   {videos.slice(0, 3).map((video, idx) => (
-                    <div key={idx} className="card-modern p-6 mb-6">
-                      <div className="flex items-start gap-4 mb-4">
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-red-500 to-pink-500 flex items-center justify-center text-white font-bold">
+                    <div
+                      key={idx}
+                      className="card-modern p-4 md:p-6 mb-4 md:mb-6"
+                    >
+                      <div className="flex items-start gap-3 md:gap-4 mb-3 md:mb-4">
+                        <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-r from-red-500 to-pink-500 flex items-center justify-center text-white font-bold text-sm md:text-base">
                           {idx + 1}
                         </div>
                         <div className="flex-1">
-                          <h4 className="text-lg font-semibold text-white mb-2">
+                          <h4 className="text-base md:text-lg font-semibold text-white mb-1 md:mb-2">
                             {video?.title}
                           </h4>
-                          <p className="text-gray-400 text-sm mb-2">
+                          <p className="text-gray-400 text-xs md:text-sm mb-1 md:mb-2">
                             By {video?.channel} •{' '}
                             {video?.views?.toLocaleString()} views
                           </p>
-                          <p className="text-gray-300 text-sm mb-4 line-clamp-3">
+                          <p className="text-gray-300 text-xs md:text-sm mb-3 md:mb-4 line-clamp-2 md:line-clamp-3">
                             {video?.description?.substring(0, 200)}...
                           </p>
-                          <div className="flex flex-wrap gap-2 mb-4">
+                          <div className="flex flex-wrap gap-1 md:gap-2 mb-3 md:mb-4">
                             {video?.tags
                               ?.slice(0, 4)
                               .map((tag: string, tagIdx: number) => (
                                 <span
                                   key={tagIdx}
-                                  className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs"
+                                  className="inline-flex items-center gap-1 px-2 md:px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs"
                                 >
                                   <Tag className="w-3 h-3" />
                                   {tag}
@@ -499,18 +504,18 @@ export default function ModernChatInterface({
                               ))}
                           </div>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1 md:gap-2">
                           <button className="p-2 rounded-lg glass hover:bg-white/10 transition-colors">
-                            <Bookmark className="w-4 h-4 text-gray-400" />
+                            <Bookmark className="w-3 h-3 md:w-4 md:h-4 text-gray-400" />
                           </button>
                           <button className="p-2 rounded-lg glass hover:bg-white/10 transition-colors">
-                            <Share2 className="w-4 h-4 text-gray-400" />
+                            <Share2 className="w-3 h-3 md:w-4 md:h-4 text-gray-400" />
                           </button>
                         </div>
                       </div>
 
                       {/* YouTube Embed */}
-                      <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black group">
+                      <div className="relative w-full h-48 sm:h-56 md:aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black group">
                         <iframe
                           src={video?.embedUrl}
                           title={video?.title}
@@ -518,26 +523,26 @@ export default function ModernChatInterface({
                           allowFullScreen
                           className="w-full h-full"
                         />
-                        <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
+                        <div className="absolute top-2 md:top-4 right-2 md:right-4 opacity-0 md:group-hover:opacity-100 transition-opacity flex gap-1 md:gap-2">
                           <button className="p-2 rounded-lg bg-black/70 backdrop-blur-sm text-white hover:bg-black/90 transition-colors">
-                            <ExternalLink className="w-4 h-4" />
+                            <ExternalLink className="w-3 h-3 md:w-4 md:h-4" />
                           </button>
                         </div>
                       </div>
 
                       {/* Video Stats */}
-                      <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/10">
-                        <div className="flex items-center gap-4 text-sm text-gray-400">
+                      <div className="flex items-center justify-between mt-3 md:mt-4 pt-3 md:pt-4 border-t border-white/10">
+                        <div className="flex items-center gap-2 md:gap-4 text-xs md:text-sm text-gray-400">
                           <span className="flex items-center gap-1">
-                            <Eye className="w-4 h-4" />
+                            <Eye className="w-3 h-3 md:w-4 md:h-4" />
                             {video?.views?.toLocaleString()}
                           </span>
                           <span className="flex items-center gap-1">
-                            <ThumbsUp className="w-4 h-4" />
+                            <ThumbsUp className="w-3 h-3 md:w-4 md:h-4" />
                             {video?.likes?.toLocaleString()}
                           </span>
-                          <span className="flex items-center gap-1">
-                            <MessageSquare className="w-4 h-4" />
+                          <span className="flex items-center gap-1 mobile-hidden md:flex">
+                            <MessageSquare className="w-3 h-3 md:w-4 md:h-4" />
                             {video?.comments?.toLocaleString()}
                           </span>
                         </div>
@@ -553,23 +558,26 @@ export default function ModernChatInterface({
 
             {/* Similar Results */}
             {data.similar_results && data.similar_results.length > 0 && (
-              <div className="mb-8">
-                <div className="flex items-center gap-2 mb-6">
+              <div className="mb-6 md:mb-8">
+                <div className="flex items-center gap-2 mb-4 md:mb-6">
                   <Globe className="w-5 h-5 text-amber-400" />
-                  <h3 className="text-lg font-semibold text-white">
+                  <h3 className="text-base md:text-lg font-semibold text-white">
                     Related Results
                   </h3>
                 </div>
-                <div className="grid gap-4">
+                <div className="grid gap-3 md:gap-4">
                   {data.similar_results.slice(0, 5).map((result, idx) => (
-                    <div key={result.id} className="glass-dark p-6 rounded-xl">
-                      <div className="flex items-start justify-between mb-4">
+                    <div
+                      key={result.id}
+                      className="glass-dark p-4 md:p-6 rounded-xl"
+                    >
+                      <div className="flex items-start justify-between mb-3 md:mb-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center text-sm font-bold text-white">
+                          <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center text-xs md:text-sm font-bold text-white">
                             {idx + 1}
                           </div>
                           <div>
-                            <span className="text-sm font-medium text-green-400">
+                            <span className="text-xs md:text-sm font-medium text-green-400">
                               {result.relevance_percent.toFixed(1)}% match
                             </span>
                             <div className="flex items-center gap-2 mt-1">
@@ -587,25 +595,25 @@ export default function ModernChatInterface({
                           className="p-2 rounded-lg hover:bg-white/10 transition-colors"
                         >
                           {copiedId === result.id ? (
-                            <Check className="w-4 h-4 text-green-400" />
+                            <Check className="w-3 h-3 md:w-4 md:h-4 text-green-400" />
                           ) : (
-                            <Copy className="w-4 h-4 text-gray-400" />
+                            <Copy className="w-3 h-3 md:w-4 md:h-4 text-gray-400" />
                           )}
                         </button>
                       </div>
 
-                      <p className="text-gray-200 mb-4 leading-relaxed line-clamp-4">
+                      <p className="text-gray-200 mb-3 md:mb-4 leading-relaxed text-sm md:text-base line-clamp-3 md:line-clamp-4">
                         {result.text}
                       </p>
 
                       <div className="flex items-center justify-between">
-                        <div className="flex flex-wrap gap-2">
+                        <div className="flex flex-wrap gap-1 md:gap-2">
                           {result.all_payload?.metadata?.video?.tags
                             ?.slice(0, 3)
                             .map((tag: string) => (
                               <span
                                 key={tag}
-                                className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs"
+                                className="inline-flex items-center gap-1 px-2 md:px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs"
                               >
                                 <Tag className="w-3 h-3" />
                                 {tag}
@@ -624,32 +632,34 @@ export default function ModernChatInterface({
             )}
 
             {/* Footer with metadata */}
-            <div className="mt-8 pt-6 border-t border-white/10">
+            <div className="mt-6 md:mt-8 pt-4 md:pt-6 border-t border-white/10">
               <div className="flex items-center gap-2 mb-4">
                 <Activity className="w-4 h-4 text-gray-400" />
-                <span className="text-sm text-gray-400">Response Metadata</span>
+                <span className="text-xs md:text-sm text-gray-400">
+                  Response Metadata
+                </span>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
                 <div className="glass-dark p-3 rounded-lg text-center">
-                  <div className="text-lg font-bold text-white">
+                  <div className="text-base md:text-lg font-bold text-white">
                     {data.total_results || 0}
                   </div>
                   <div className="text-xs text-gray-400">Results</div>
                 </div>
                 <div className="glass-dark p-3 rounded-lg text-center">
-                  <div className="text-lg font-bold text-white">
+                  <div className="text-base md:text-lg font-bold text-white">
                     {videos.length}
                   </div>
                   <div className="text-xs text-gray-400">Videos</div>
                 </div>
                 <div className="glass-dark p-3 rounded-lg text-center">
-                  <div className="text-lg font-bold text-white">
+                  <div className="text-base md:text-lg font-bold text-white">
                     {data.similar_results?.length || 0}
                   </div>
                   <div className="text-xs text-gray-400">Sources</div>
                 </div>
                 <div className="glass-dark p-3 rounded-lg text-center">
-                  <div className="text-lg font-bold text-white">
+                  <div className="text-base md:text-lg font-bold text-white">
                     {data.similar_results?.[0]?.processing_time_ms.toFixed(0) ||
                       0}
                     ms
@@ -666,22 +676,30 @@ export default function ModernChatInterface({
           </div>
 
           {/* Action Buttons */}
-          <div className="flex items-center justify-center gap-4 mb-8">
+          <div className="flex items-center justify-center gap-2 md:gap-4 mb-6 md:mb-8 px-4 md:px-0">
             <button className="flex items-center gap-2 px-6 py-3 rounded-full glass hover:bg-white/10 transition-colors">
-              <ThumbsUp className="w-4 h-4 text-gray-400" />
-              <span className="text-gray-300">Helpful</span>
+              <ThumbsUp className="w-3 h-3 md:w-4 md:h-4 text-gray-400" />
+              <span className="text-gray-300 text-sm md:text-base mobile-hidden md:inline">
+                Helpful
+              </span>
             </button>
             <button className="flex items-center gap-2 px-6 py-3 rounded-full glass hover:bg-white/10 transition-colors">
-              <Share2 className="w-4 h-4 text-gray-400" />
-              <span className="text-gray-300">Share</span>
+              <Share2 className="w-3 h-3 md:w-4 md:h-4 text-gray-400" />
+              <span className="text-gray-300 text-sm md:text-base mobile-hidden md:inline">
+                Share
+              </span>
             </button>
             <button className="flex items-center gap-2 px-6 py-3 rounded-full glass hover:bg-white/10 transition-colors">
-              <Bookmark className="w-4 h-4 text-gray-400" />
-              <span className="text-gray-300">Save</span>
+              <Bookmark className="w-3 h-3 md:w-4 md:h-4 text-gray-400" />
+              <span className="text-gray-300 text-sm md:text-base mobile-hidden md:inline">
+                Save
+              </span>
             </button>
             <button className="flex items-center gap-2 px-6 py-3 rounded-full glass hover:bg-white/10 transition-colors">
-              <RefreshCw className="w-4 h-4 text-gray-400" />
-              <span className="text-gray-300">Regenerate</span>
+              <RefreshCw className="w-3 h-3 md:w-4 md:h-4 text-gray-400" />
+              <span className="text-gray-300 text-sm md:text-base mobile-hidden md:inline">
+                Regenerate
+              </span>
             </button>
           </div>
         </div>
@@ -690,16 +708,18 @@ export default function ModernChatInterface({
       console.error('Error parsing assistant message:', error);
       // Fallback to display raw content if JSON parsing fails
       return (
-        <div className="w-full max-w-4xl mx-auto">
-          <div className="card-modern p-8">
+        <div className="w-full max-w-4xl mx-auto px-4 md:px-0">
+          <div className="card-modern p-4 md:p-8">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-r from-red-500 to-orange-500 flex items-center justify-center">
-                <AlertTriangle className="w-4 h-4 text-white" />
+              <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gradient-to-r from-red-500 to-orange-500 flex items-center justify-center">
+                <AlertTriangle className="w-3 h-3 md:w-4 md:h-4 text-white" />
               </div>
-              <h3 className="text-lg font-semibold text-white">Response</h3>
+              <h3 className="text-base md:text-lg font-semibold text-white">
+                Response
+              </h3>
             </div>
-            <div className="glass-dark p-6 rounded-2xl">
-              <pre className="text-gray-200 whitespace-pre-wrap text-sm leading-relaxed overflow-x-auto">
+            <div className="glass-dark p-4 md:p-6 rounded-2xl">
+              <pre className="text-gray-200 whitespace-pre-wrap text-xs md:text-sm leading-relaxed overflow-x-auto">
                 {typeof content === 'string'
                   ? content
                   : JSON.stringify(content, null, 2)}
@@ -740,14 +760,14 @@ export default function ModernChatInterface({
   if (!chat) {
     return (
       <div className="flex-1 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center mx-auto mb-4 float">
-            <Sparkles className="w-8 h-8 text-white" />
+        <div className="text-center px-4">
+          <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center mx-auto mb-4 float">
+            <Sparkles className="w-6 h-6 md:w-8 md:h-8 text-white" />
           </div>
-          <h2 className="text-xl font-semibold text-gray-400 mb-2">
+          <h2 className="text-lg md:text-xl font-semibold text-gray-400 mb-2">
             No chat selected
           </h2>
-          <p className="text-gray-500">
+          <p className="text-sm md:text-base text-gray-500">
             Select a chat or create a new one to get started
           </p>
         </div>
@@ -763,25 +783,25 @@ export default function ModernChatInterface({
     .find(m => m.role === 'assistant');
 
   return (
-    <div className="flex-1 flex flex-col min-h-screen bg-gradient-to-br from-gray-900 via-gray-900 to-indigo-900/20">
+    <div className="flex flex-col h-screen bg-gradient-to-br from-gray-900 via-gray-900 to-indigo-900/20">
       {/* Main Content */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto pt-16 md:pt-0">
         {chat.messages.length === 0 ? (
           /* Welcome Screen */
-          <div className="h-full flex flex-col items-center justify-center p-8">
+          <div className="min-h-full flex flex-col items-center justify-center p-4 md:p-8">
             {/* Header Section */}
-            <div className="text-center mb-8">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center mx-auto mb-6 float pulse-glow">
-                <Sparkles className="w-10 h-10 text-white" />
+            <div className="text-center mb-6 md:mb-8">
+              <div className="w-12 h-12 md:w-20 md:h-20 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center mx-auto mb-4 md:mb-6 float pulse-glow">
+                <Sparkles className="w-8 h-8 md:w-10 md:h-10 text-white" />
               </div>
-              <h1 className="text-4xl font-bold gradient-text mb-2">
+              <h1 className="text-xl md:text-4xl font-bold gradient-text mb-2">
                 {landingData?.product_info.name || 'IndieHash AI'}
               </h1>
-              <p className="text-lg text-indigo-300 mb-4">
+              <p className="text-sm md:text-lg text-indigo-300 mb-3 md:mb-4">
                 {landingData?.product_info.tagline ||
                   'RAG engine on top of a curated database.'}
               </p>
-              <p className="text-gray-400 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-xs md:text-base text-gray-400 max-w-3xl mx-auto leading-relaxed px-4">
                 {landingData?.product_info.description ||
                   'Your intelligent assistant for discovering resources, learning new skills, and exploring ideas.'}
               </p>
@@ -789,12 +809,12 @@ export default function ModernChatInterface({
 
             {loadingLandingData ? (
               /* Loading State */
-              <div className="w-full max-w-6xl">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+              <div className="w-full max-w-6xl px-4">
+                <div className="mobile-grid md:grid-cols-2 gap-3 md:gap-4 mb-6 md:mb-8">
                   {[1, 2, 3, 4].map(i => (
-                    <div key={i} className="card-modern p-6">
+                    <div key={i} className="card-modern mobile-card md:p-6">
                       <div className="flex items-start gap-4">
-                        <div className="w-12 h-12 rounded-xl shimmer"></div>
+                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl shimmer"></div>
                         <div className="flex-1">
                           <div className="h-4 shimmer rounded mb-2 w-20"></div>
                           <div className="h-6 shimmer rounded"></div>
@@ -805,21 +825,23 @@ export default function ModernChatInterface({
                 </div>
               </div>
             ) : (
-              <div className="w-full max-w-6xl">
+              <div className="w-full max-w-6xl px-4">
                 {/* Category Tabs */}
                 {landingData && (
-                  <div className="flex flex-wrap justify-center gap-2 mb-8">
+                  <div className="flex justify-center gap-2 mb-4 md:mb-8 overflow-x-auto pb-2 px-2">
                     {landingData.quick_start_questions.map(category => (
                       <button
                         key={category.category}
                         onClick={() => setSelectedCategory(category.category)}
-                        className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                        className={`flex items-center gap-1 md:gap-2 px-2 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap ${
                           selectedCategory === category.category
                             ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg'
                             : 'glass text-gray-300 hover:text-white hover:bg-white/10'
                         }`}
                       >
-                        <span className="text-lg">{category.icon}</span>
+                        <span className="text-sm md:text-lg">
+                          {category.icon}
+                        </span>
                         {category.category}
                       </button>
                     ))}
@@ -827,25 +849,25 @@ export default function ModernChatInterface({
                 )}
 
                 {/* Quick Start Questions */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-6 md:mb-8">
                   {getPredefinedPrompts().map((prompt, idx) => (
                     <button
                       key={idx}
                       onClick={() => handlePromptSelect(prompt.text)}
                       disabled={loading}
-                      className="group card-modern p-6 text-left hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="group card-modern p-4 md:p-6 text-left hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      <div className="flex items-start gap-4">
+                      <div className="flex items-start gap-3 md:gap-4">
                         <div
-                          className={`w-12 h-12 rounded-xl bg-gradient-to-r ${prompt.gradient} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}
+                          className={`w-8 h-8 md:w-12 md:h-12 rounded-xl bg-gradient-to-r ${prompt.gradient} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}
                         >
-                          <prompt.icon className="w-6 h-6 text-white" />
+                          <prompt.icon className="w-4 h-4 md:w-6 md:h-6 text-white" />
                         </div>
                         <div className="flex-1">
-                          <div className="text-sm text-gray-400 mb-1">
+                          <div className="text-xs md:text-sm text-gray-400 mb-1">
                             {prompt.category}
                           </div>
-                          <div className="text-white font-medium group-hover:text-indigo-300 transition-colors">
+                          <div className="text-xs md:text-base text-white font-medium group-hover:text-indigo-300 transition-colors leading-tight">
                             {prompt.text}
                           </div>
                         </div>
@@ -856,31 +878,31 @@ export default function ModernChatInterface({
 
                 {/* System Stats */}
                 {landingData?.system_info && (
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6 md:mb-8">
                     <div className="card-modern p-4 text-center">
-                      <Database className="w-8 h-8 text-indigo-400 mx-auto mb-2" />
-                      <div className="text-2xl font-bold text-white">
+                      <Database className="w-5 h-5 md:w-8 md:h-8 text-indigo-400 mx-auto mb-2" />
+                      <div className="text-sm md:text-2xl font-bold text-white">
                         {landingData.system_info.total_documents.toLocaleString()}
                       </div>
                       <div className="text-xs text-gray-400">Documents</div>
                     </div>
                     <div className="card-modern p-4 text-center">
-                      <Activity className="w-8 h-8 text-green-400 mx-auto mb-2" />
-                      <div className="text-2xl font-bold text-white">
+                      <Activity className="w-5 h-5 md:w-8 md:h-8 text-green-400 mx-auto mb-2" />
+                      <div className="text-sm md:text-2xl font-bold text-white">
                         {landingData.system_info.indexed_vectors.toLocaleString()}
                       </div>
                       <div className="text-xs text-gray-400">Vectors</div>
                     </div>
                     <div className="card-modern p-4 text-center">
-                      <Globe className="w-8 h-8 text-blue-400 mx-auto mb-2" />
-                      <div className="text-2xl font-bold text-white">
+                      <Globe className="w-5 h-5 md:w-8 md:h-8 text-blue-400 mx-auto mb-2" />
+                      <div className="text-sm md:text-2xl font-bold text-white">
                         {landingData.system_info.knowledge_domains}
                       </div>
                       <div className="text-xs text-gray-400">Domains</div>
                     </div>
                     <div className="card-modern p-4 text-center">
-                      <Zap className="w-8 h-8 text-yellow-400 mx-auto mb-2" />
-                      <div className="text-2xl font-bold text-white">
+                      <Zap className="w-5 h-5 md:w-8 md:h-8 text-yellow-400 mx-auto mb-2" />
+                      <div className="text-sm md:text-2xl font-bold text-white">
                         {landingData.system_info.response_time}
                       </div>
                       <div className="text-xs text-gray-400">Avg Response</div>
@@ -890,18 +912,18 @@ export default function ModernChatInterface({
 
                 {/* Features */}
                 {landingData?.product_info.features && (
-                  <div className="card-modern p-6 mb-8">
-                    <h3 className="text-xl font-semibold text-white mb-4 text-center">
+                  <div className="card-modern p-4 md:p-6 mb-6 md:mb-8">
+                    <h3 className="text-base md:text-xl font-semibold text-white mb-4 text-center">
                       Key Features
                     </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
                       {landingData.product_info.features.map((feature, idx) => (
                         <div
                           key={idx}
-                          className="flex items-start gap-3 p-3 rounded-lg glass-dark"
+                          className="flex items-start gap-2 md:gap-3 p-3 rounded-lg glass-dark"
                         >
-                          <Star className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" />
-                          <span className="text-gray-300 text-sm">
+                          <Star className="w-3 h-3 md:w-5 md:h-5 text-yellow-400 flex-shrink-0 mt-0.5" />
+                          <span className="text-gray-300 text-xs md:text-sm leading-tight">
                             {feature}
                           </span>
                         </div>
@@ -912,20 +934,20 @@ export default function ModernChatInterface({
 
                 {/* Usage Tips */}
                 {landingData?.usage_tips && (
-                  <div className="card-modern p-6">
-                    <h3 className="text-xl font-semibold text-white mb-4 text-center">
+                  <div className="card-modern p-4 md:p-6">
+                    <h3 className="text-base md:text-xl font-semibold text-white mb-4 text-center">
                       💡 Usage Tips
                     </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                       {landingData.usage_tips.map((tip, idx) => (
                         <div key={idx} className="glass-dark p-4 rounded-lg">
-                          <h4 className="font-semibold text-indigo-300 mb-2">
+                          <h4 className="text-xs md:text-base font-semibold text-indigo-300 mb-2">
                             {tip.title}
                           </h4>
-                          <p className="text-gray-400 text-sm mb-2">
+                          <p className="text-gray-400 text-xs md:text-sm mb-2">
                             {tip.description}
                           </p>
-                          <div className="text-xs text-gray-500 font-mono bg-gray-800 p-2 rounded">
+                          <div className="text-xs text-gray-500 font-mono bg-gray-800 p-2 rounded overflow-x-auto leading-tight">
                             {tip.example}
                           </div>
                         </div>
@@ -938,10 +960,10 @@ export default function ModernChatInterface({
           </div>
         ) : (
           /* Chat Messages */
-          <div className="p-6 space-y-8">
+          <div className="p-4 md:p-6 space-y-6 md:space-y-8">
             {lastUserMessage && (
-              <div className="text-center">
-                <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 leading-tight">
+              <div className="text-center px-4">
+                <h1 className="text-lg md:text-3xl lg:text-4xl font-bold text-white mb-2 leading-tight">
                   {lastUserMessage.content}
                 </h1>
                 <div className="w-24 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full mx-auto"></div>
@@ -952,13 +974,13 @@ export default function ModernChatInterface({
               renderAssistantMessage(lastAssistantMessage.content)}
 
             {loading && (
-              <div className="w-full max-w-4xl mx-auto">
-                <div className="card-modern p-8">
+              <div className="w-full max-w-4xl mx-auto px-4 md:px-0">
+                <div className="card-modern p-4 md:p-8">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center">
-                      <Zap className="w-4 h-4 text-white animate-pulse" />
+                    <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center">
+                      <Zap className="w-3 h-3 md:w-4 md:h-4 text-white animate-pulse" />
                     </div>
-                    <span className="text-white font-medium">
+                    <span className="text-white font-medium text-sm md:text-base">
                       AI is thinking<span className="loading-dots"></span>
                     </span>
                   </div>
@@ -976,7 +998,7 @@ export default function ModernChatInterface({
       </div>
 
       {/* Input Area */}
-      <div className="border-t border-white/10 bg-gray-900/50 backdrop-blur-xl p-6">
+      <div className="border-t border-white/10 bg-gray-900/50 backdrop-blur-xl p-4 md:p-6">
         <div className="max-w-4xl mx-auto">
           <form onSubmit={handleSubmit} className="relative">
             <input
@@ -986,22 +1008,22 @@ export default function ModernChatInterface({
               onChange={e => setMessage(e.target.value)}
               placeholder="Ask me anything..."
               disabled={loading}
-              className="input-modern w-full py-4 px-6 pr-14 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              className="input-modern w-full py-3 md:py-4 px-4 md:px-6 pr-12 md:pr-14 text-sm md:text-lg disabled:opacity-50 disabled:cursor-not-allowed"
             />
             <button
               type="submit"
               disabled={!message.trim() || loading}
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 transition-all"
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 transition-all"
             >
               {loading ? (
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <div className="w-4 h-4 md:w-5 md:h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               ) : (
-                <Send className="w-5 h-5 text-white" />
+                <Send className="w-4 h-4 md:w-5 md:h-5 text-white" />
               )}
             </button>
           </form>
           <div className="mt-3 text-center">
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-gray-500 px-2">
               Powered by {landingData?.product_info.name || 'IndieHash'} AI •
               Press Enter to send
             </p>

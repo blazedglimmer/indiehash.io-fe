@@ -35,14 +35,16 @@ export default function ChatPage() {
   const activeChat = chats.find(chat => chat.id === activeChatId) || null;
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-gray-900 via-gray-900 to-indigo-900/20 text-white overflow-hidden">
+    <div className="h-screen bg-gradient-to-br from-gray-900 via-gray-900 to-indigo-900/20 text-white overflow-hidden">
       <ModernSidebar
         chats={chats}
         activeChat={activeChatId}
         onSelectChat={setActiveChatId}
         onNewChat={handleNewChat}
       />
-      <ModernChatInterface chat={activeChat} setChats={setChats} />
+      <div className="flex-1 md:ml-80">
+        <ModernChatInterface chat={activeChat} setChats={setChats} />
+      </div>
     </div>
   );
 }
