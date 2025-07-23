@@ -274,17 +274,69 @@ body {
 
 /* Responsive design */
 @media (max-width: 768px) {
-  .sidebar {
-    position: fixed;
-    z-index: 50;
-    height: 100vh;
-    transform: translateX(-100%);
+  /* Mobile-specific adjustments */
+  /* Touch-friendly button sizes */
+  /* Improved scrolling on mobile */
+  .mobile-scroll, .overflow-y-auto {
+    -webkit-overflow-scrolling: touch;
   }
   
-  .sidebar.mobile-open {
-    transform: translateX(0);
-    width: 280px;
-    min-width: 280px;
-    max-width: 280px;
+  /* Prevent zoom on input focus */
+  input[type="text"], input[type="email"], input[type="password"], textarea {
+    font-size: 16px !important;
+  }
+  
+  /* Better mobile tap targets */
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Mobile-specific card padding */
+  .card-modern {
+    padding: 1rem;
+  }
+  
+  /* Reduce motion for better performance */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Tablet responsive design */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .tablet-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tablet-padding {
+    padding: 1.5rem;
+  }
+
+  .tablet-text {
+    font-size: 0.9rem;
+  }
+}
+
+/* Large screen optimizations */
+@media (min-width: 1440px) {
+  .large-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .large-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .high-dpi-border {
+    border-width: 0.5px;
   }
 }
