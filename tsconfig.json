@@ -85,7 +85,7 @@
     "**/*.js",
     "**/*.jsx",
     ".next/types/**/*.ts"
-  ],
+, "postcss.config.js", "tailwind.config.js"  ],
   "exclude": [
     "node_modules",
     ".next",
