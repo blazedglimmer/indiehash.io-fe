@@ -42,6 +42,56 @@ export interface QueryRequest {
   limit?: number;
 }
 
+export interface QuickStartQuestion {
+  category: string;
+  icon: string;
+  questions: string[];
+}
+
+export interface ProductInfo {
+  name: string;
+  tagline: string;
+  description: string;
+  features: string[];
+  domains: string[];
+}
+
+export interface UsageTip {
+  title: string;
+  description: string;
+  example: string;
+}
+
+export interface SystemInfo {
+  status: string;
+  total_documents: number;
+  indexed_vectors: number;
+  knowledge_domains: number;
+  response_time: string;
+  last_updated: string;
+}
+
+export interface SampleConversation {
+  user_question: string;
+  preview_response: string;
+  follow_up_suggestions: string[];
+}
+
+export interface FeaturedContent {
+  recent_additions: string[];
+  popular_topics: string[];
+}
+
+export interface LandingPageData {
+  chat_id: string;
+  product_info: ProductInfo;
+  quick_start_questions: QuickStartQuestion[];
+  featured_content: FeaturedContent;
+  usage_tips: UsageTip[];
+  system_info: SystemInfo;
+  sample_conversation: SampleConversation;
+}
+
 // For client-side API calls to Next.js API routes, use relative paths
 // For server-side calls to external APIs, use full URLs
 
@@ -129,6 +179,16 @@ export async function queryEnhanced(
   });
 }
 
+// Client-side function to get landing page data
+export async function getLandingPageData(
+  signal?: AbortSignal
+): Promise<ApiResponse<LandingPageData>> {
+  return apiRequest<LandingPageData>('/api/landing-page', {
+    method: 'GET',
+    ...(signal && { signal }),
+  });
+}
+
 // Mock function for development/fallback
 export function getMockResponse(
   question: string
@@ -189,5 +249,117 @@ export function getMockResponse(
       request_id: '550e8400-e29b-41d4-a716-446655440001',
     },
     request_id: '550e8400-e29b-41d4-a716-446655440001',
+  };
+}
+
+// Mock function for landing page data
+export function getMockLandingPageData(): ApiResponse<LandingPageData> {
+  return {
+    success: true,
+    message: 'Landing page data retrieved successfully',
+    data: {
+      chat_id: 'chat_mock_id',
+      product_info: {
+        name: 'IndieHash',
+        tagline: 'RAG engine on top of a curated database.',
+        description:
+          'IndieHash is a next-generation RAG (Retrieval-Augmented Generation) server that transforms curated knowledge into intelligent conversations.',
+        features: [
+          "🧠 Advanced Vector Search - Find exactly what you're looking for",
+          '🎯 Domain-Specific Expertise - Curated content in programming, travel, lifestyle & more',
+          '⚡ Real-time Knowledge Retrieval - Instant access to relevant information',
+        ],
+        domains: [
+          'Programming & Technology',
+          'Travel & Adventure',
+          'Lifestyle & Wellness',
+          'Business & Entrepreneurship',
+        ],
+      },
+      quick_start_questions: [
+        {
+          category: 'Programming',
+          icon: '💻',
+          questions: [
+            'I want to learn about Arcs in Rust programming',
+            'What are the best practices for error handling in Go?',
+            'How do I optimize React performance for large applications?',
+          ],
+        },
+        {
+          category: 'Travel',
+          icon: '🌍',
+          questions: [
+            'What are some hidden gems to visit in Southeast Asia?',
+            'Best budget-friendly destinations for digital nomads',
+            'How to plan a perfect road trip through Europe?',
+          ],
+        },
+        {
+          category: 'Lifestyle',
+          icon: '✨',
+          questions: [
+            'How to build a productive morning routine?',
+            'What are some effective stress management techniques?',
+            'Best meal prep strategies for busy professionals',
+          ],
+        },
+        {
+          category: 'Business',
+          icon: '🚀',
+          questions: [
+            'How to validate a startup idea before building?',
+            'What are the key metrics every SaaS founder should track?',
+            'Best strategies for building an audience on social media',
+          ],
+        },
+      ],
+      featured_content: {
+        recent_additions: [
+          'Latest programming tutorials from top developers',
+          'Travel vlogs from adventure seekers',
+          'Entrepreneurship insights from successful founders',
+        ],
+        popular_topics: [
+          'Rust programming fundamentals',
+          'Digital nomad destinations',
+          'Productivity hacks',
+        ],
+      },
+      usage_tips: [
+        {
+          title: 'Ask Specific Questions',
+          description:
+            'The more specific your question, the better the response.',
+          example:
+            '❓ How do I implement error handling in Rust using Result types?',
+        },
+        {
+          title: 'Explore Different Domains',
+          description:
+            "IndieHash covers multiple niches. Don't hesitate to ask about travel, lifestyle, business, or creative topics",
+          example: '❓ What are the best places to visit in Bali?',
+        },
+      ],
+      system_info: {
+        status: 'active',
+        total_documents: 1250,
+        indexed_vectors: 45000,
+        knowledge_domains: 5,
+        response_time: '150ms',
+        last_updated: '2025-01-21T16:30:00Z',
+      },
+      sample_conversation: {
+        user_question: 'I want to learn about Arcs in Rust programming',
+        preview_response:
+          'Arcs (Atomically Reference Counted) in Rust are a powerful tool for shared ownership in concurrent programming...',
+        follow_up_suggestions: [
+          'Show me code examples of Arc usage',
+          "What's the difference between Arc and Rc?",
+          'When should I use Arc vs other smart pointers?',
+        ],
+      },
+    },
+    request_id: 'mock_landing_request_id',
   };
 }
