@@ -4,6 +4,7 @@ import '@/app/landing/landing.css';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import Image from 'next/image';
+import { Sparkles, Globe, Zap, ArrowRight } from 'lucide-react';
 
 function Stars() {
   useEffect(() => {
@@ -71,7 +72,7 @@ export default function LandingPage() {
           Your AI-powered assistant for discovering resources, learning new
           skills, and exploring ideas
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 items-center">
+        <div className="flex flex-col sm:flex-row gap-4 items-center justify-center mb-16">
           <Link
             href="/chat"
             className="btn-primary px-8 py-4 rounded-full text-lg font-semibold flex items-center gap-2 hover:scale-105 transition-all"
@@ -91,16 +92,69 @@ export default function LandingPage() {
               />
             </svg>
           </Link>
+          {/* <Link
+            href="/chat"
+            className="group bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:from-indigo-600 hover:to-purple-600 transition-all hover:scale-105 shadow-xl flex items-center gap-2"
+          >
+            Get Started
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </Link> */}
           <Link
             href="/resources"
-            className="glass px-8 py-4 rounded-full text-lg font-medium text-white hover:bg-white/10 transition-all"
+            className="bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-white/20 transition-all hover:scale-105 flex items-center gap-2"
           >
+            <Globe className="w-5 h-5" />
             Explore Resources
           </Link>
         </div>
+
+        {/* Feature Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-12">
+          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all hover:scale-105">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center mb-4">
+              <Sparkles className="w-6 h-6 text-white" />
+            </div>
+            <h3 className="text-xl font-semibold mb-2 text-white">
+              AI-Powered
+            </h3>
+            <p className="text-gray-400">
+              Get intelligent responses and curated resources tailored to your
+              needs
+            </p>
+          </div>
+
+          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all hover:scale-105">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center mb-4">
+              <Globe className="w-6 h-6 text-white" />
+            </div>
+            <h3 className="text-xl font-semibold mb-2 text-white">
+              Resource Discovery
+            </h3>
+            <p className="text-gray-400">
+              Discover the best learning resources and tools for any topic
+            </p>
+          </div>
+
+          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all hover:scale-105">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center mb-4">
+              <Zap className="w-6 h-6 text-white" />
+            </div>
+            <h3 className="text-xl font-semibold mb-2 text-white">
+              Fast & Accurate
+            </h3>
+            <p className="text-gray-400">
+              Get instant, relevant answers with detailed explanations
+            </p>
+          </div>
+        </div>
       </main>
-      {/* Decorative bottom element */}
-      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-indigo-500/10 to-transparent z-0"></div>
+
+      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-indigo-500/10 to-transparent pointer-events-none" />
+      <div className="absolute top-1/4 left-10 w-2 h-2 bg-indigo-400 rounded-full animate-pulse" />
+      <div className="absolute top-1/3 right-20 w-1 h-1 bg-purple-400 rounded-full animate-pulse" />
+      <div className="absolute bottom-1/4 left-1/4 w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse" />
+
+      {/* <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-indigo-500/10 to-transparent z-0"></div> */}
     </div>
   );
 }

@@ -136,35 +136,6 @@ body {
   }
 }
 
-/* Sidebar styles */
-.sidebar {
-  width: 64px;
-  min-width: 64px;
-  max-width: 64px;
-  overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.sidebar:hover,
-.sidebar.expanded {
-  width: 280px;
-  min-width: 280px;
-  max-width: 280px;
-}
-
-.sidebar-content {
-  width: 280px;
-  transition: opacity 0.2s ease-in-out;
-}
-
-.sidebar:not(:hover) .sidebar-content > *:not(.sidebar-icon) {
-  opacity: 0;
-}
-
-.sidebar:hover .sidebar-content > * {
-  opacity: 1;
-}
-
 /* Button styles */
 .btn-primary {
   background: linear-gradient(135deg, var(--primary), var(--accent));
@@ -276,6 +247,31 @@ body {
   }
 }
 
+/* Stars animation for landing page */
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+  width: 2px;
+  height: 2px;
+  animation: twinkle 2s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0.2; }
+}
+
+.glitter {
+  pointer-events: none;
+  position: absolute;
+  top: 0; 
+  left: 0; 
+  width: 100vw; 
+  height: 100vh;
+  z-index: 0;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .sidebar {
@@ -290,12 +286,5 @@ body {
     width: 280px;
     min-width: 280px;
     max-width: 280px;
-  }
-}
-
-/* Dark mode enhancements */
-@media (prefers-color-scheme: dark) {
-  .glass {
-    background: rgba(0, 0, 0, 0.3);
   }
 }
