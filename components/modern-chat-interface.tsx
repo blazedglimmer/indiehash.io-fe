@@ -30,6 +30,7 @@ import {
   AlertTriangle,
 } from 'lucide-react';
 import FeaturedVideos, { VideoType } from './featured-videos';
+import MarkdownResponse from './markdown-response';
 
 interface ModernChatInterfaceProps {
   chat: Chat | null;
@@ -422,9 +423,7 @@ export default function ModernChatInterface({
                   </h3>
                 </div>
                 <div className="glass-dark p-4 md:p-6 rounded-2xl mb-3 md:mb-4">
-                  <p className="text-gray-200 leading-relaxed text-sm md:text-lg">
-                    {summary}
-                  </p>
+                  <MarkdownResponse content={summary} />
                 </div>
                 {/* Enriched Content Section */}
                 {data.enriched_content && (
@@ -432,9 +431,7 @@ export default function ModernChatInterface({
                     <h4 className="text-sm md:text-md font-semibold text-indigo-300 mb-2">
                       Enriched Insights
                     </h4>
-                    <p className="text-gray-300 leading-relaxed text-sm md:text-base">
-                      {data.enriched_content}
-                    </p>
+                    <MarkdownResponse content={data.enriched_content} />
                   </div>
                 )}
               </div>
