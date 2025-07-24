@@ -72,7 +72,6 @@ export default function ModernChatInterface({
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
-  const [copiedId, setCopiedId] = useState<string | null>(null);
   const [landingData, setLandingData] = useState<LandingPageData | null>(null);
   const [loadingLandingData, setLoadingLandingData] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
@@ -195,15 +194,6 @@ export default function ModernChatInterface({
     handleSendMessage(prompt);
   };
 
-  const copyToClipboard = async (text: string, id: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopiedId(id);
-      setTimeout(() => setCopiedId(null), 2000);
-    } catch (error) {
-      console.error('Failed to copy:', error);
-    }
-  };
 
   // Extract YouTube video ID from URL
   //   const extractYouTubeId = (url: string): string | null => {
