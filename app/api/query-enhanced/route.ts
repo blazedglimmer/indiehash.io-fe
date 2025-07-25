@@ -42,6 +42,7 @@ export async function POST(request: NextRequest) {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${API_SECRET}`,
+        'X-Secret-Key': API_SECRET, // Include secret in headers
       },
       body: JSON.stringify({
         question,
