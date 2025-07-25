@@ -24,7 +24,6 @@ export async function GET() {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${API_SECRET}`,
         'X-Secret-Key': API_SECRET, // Include secret in headers
       },
     });
