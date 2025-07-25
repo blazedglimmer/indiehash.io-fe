@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Chat } from '../../../../types';
+import { Chat } from '@/types';
 import { getAllChats } from '@/utils/storage';
 import { CheckCircle2, ArrowLeft } from 'lucide-react';
 
