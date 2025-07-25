@@ -393,7 +393,7 @@ export default function WorkspaceInterface({
           {/* Main Content Card */}
           <div className="card-modern p-4 md:p-8 mb-4 md:mb-6">
             {/* Source Tabs */}
-            <div className="flex gap-2 mb-4 md:mb-6 overflow-x-auto pb-2">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4 md:mb-6 overflow-x-auto pb-2">
               {sourceCategories.map((source, idx) => (
                 <button
                   key={source.label}
@@ -402,7 +402,7 @@ export default function WorkspaceInterface({
                     activeTab === idx
                       ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg'
                       : 'glass text-gray-300 hover:text-white hover:bg-white/10'
-                  }`}
+                  } justify-center`}
                 >
                   <source.icon className="w-3 h-3 md:w-4 md:h-4" />
                   {source.label}
@@ -488,26 +488,26 @@ export default function WorkspaceInterface({
           </div>
 
           {/* Action Buttons */}
-          <div className="flex items-center justify-center gap-2 md:gap-4 mb-6 md:mb-8 px-4 md:px-0">
-            <button className="flex items-center gap-2 px-6 py-3 rounded-full glass hover:bg-white/10 transition-colors">
+          <div className="grid grid-cols-2 md:grid-cols-4 items-center justify-center gap-2 md:gap-4 mb-6 md:mb-8 px-4 md:px-0">
+            <button className="flex items-center justify-center gap-2 px-6 py-3 rounded-full glass hover:bg-white/10 transition-colors">
               <ThumbsUp className="w-3 h-3 md:w-4 md:h-4 text-gray-400" />
               <span className="text-gray-300 text-sm md:text-base mobile-hidden md:inline">
                 Helpful
               </span>
             </button>
-            <button className="flex items-center gap-2 px-6 py-3 rounded-full glass hover:bg-white/10 transition-colors">
+            <button className="flex items-center justify-center gap-2 px-6 py-3 rounded-full glass hover:bg-white/10 transition-colors">
               <Share2 className="w-3 h-3 md:w-4 md:h-4 text-gray-400" />
               <span className="text-gray-300 text-sm md:text-base mobile-hidden md:inline">
                 Share
               </span>
             </button>
-            <button className="flex items-center gap-2 px-6 py-3 rounded-full glass hover:bg-white/10 transition-colors">
+            <button className="flex items-center justify-center gap-2 px-6 py-3 rounded-full glass hover:bg-white/10 transition-colors">
               <Bookmark className="w-3 h-3 md:w-4 md:h-4 text-gray-400" />
               <span className="text-gray-300 text-sm md:text-base mobile-hidden md:inline">
                 Save
               </span>
             </button>
-            <button className="flex items-center gap-2 px-6 py-3 rounded-full glass hover:bg-white/10 transition-colors">
+            <button className="flex items-center justify-center gap-2 px-6 py-3 rounded-full glass hover:bg-white/10 transition-colors">
               <RefreshCw className="w-3 h-3 md:w-4 md:h-4 text-gray-400" />
               <span className="text-gray-300 text-sm md:text-base mobile-hidden md:inline">
                 Regenerate
