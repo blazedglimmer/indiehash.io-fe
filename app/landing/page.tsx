@@ -40,7 +40,7 @@ export default function LandingPage() {
         </div>
         <div className="flex items-center space-x-6">
           <Link
-            href="/chat"
+            href="/workspace"
             className="btn-primary px-6 py-2 rounded-full text-sm font-medium"
           >
             Launch app
@@ -74,7 +74,7 @@ export default function LandingPage() {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 items-center justify-center mb-16">
           <Link
-            href="/chat"
+            href="/workspace"
             className="btn-primary px-8 py-4 rounded-full text-lg font-semibold flex items-center gap-2 hover:scale-105 transition-all"
           >
             Get Started
@@ -93,7 +93,7 @@ export default function LandingPage() {
             </svg>
           </Link>
           {/* <Link
-            href="/chat"
+            href="/workspace"
             className="group bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:from-indigo-600 hover:to-purple-600 transition-all hover:scale-105 shadow-xl flex items-center gap-2"
           >
             Get Started
