@@ -640,12 +640,12 @@ export default function WorkspaceInterface({
               <div className="w-full max-w-6xl px-4">
                 {/* Category Tabs */}
                 {landingData && (
-                  <div className="flex justify-center gap-2 mb-4 md:mb-8 overflow-x-auto pb-2 px-2">
+                  <div className="grid grid-cols-2 md:grid-cols-4 justify-center gap-2 mb-4 md:mb-8 overflow-x-auto pb-2 px-2">
                     {landingData.quick_start_questions.map(category => (
                       <button
                         key={category.category}
                         onClick={() => setSelectedCategory(category.category)}
-                        className={`flex items-center gap-1 md:gap-2 px-2 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap ${
+                        className={`flex items-center justify-center gap-1 md:gap-2 px-2 md:px-4 py-0 md:py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap ${
                           selectedCategory === category.category
                             ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg'
                             : 'glass text-gray-300 hover:text-white hover:bg-white/10'
