@@ -32,7 +32,7 @@ import {
 import FeaturedVideos, { VideoType } from './featured-videos';
 import MarkdownResponse from './markdown-response';
 
-interface ModernChatInterfaceProps {
+interface WorkspaceInterfaceProps {
   chat: Chat | null;
   setChats: React.Dispatch<React.SetStateAction<Chat[]>>;
 }
@@ -66,10 +66,10 @@ const sourceCategories = [
   { label: 'Community', icon: Globe, active: false },
 ];
 
-export default function ModernChatInterface({
+export default function WorkspaceInterface({
   chat,
   setChats,
-}: ModernChatInterfaceProps) {
+}: WorkspaceInterfaceProps) {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
@@ -194,7 +194,6 @@ export default function ModernChatInterface({
   const handlePromptSelect = (prompt: string) => {
     handleSendMessage(prompt);
   };
-
 
   // Extract YouTube video ID from URL
   //   const extractYouTubeId = (url: string): string | null => {
@@ -439,7 +438,9 @@ export default function ModernChatInterface({
 
             {/* Featured Videos Section */}
             {videos.length > 0 && (
-              <FeaturedVideos videos={videos.filter((v): v is VideoType => v !== null)} />
+              <FeaturedVideos
+                videos={videos.filter((v): v is VideoType => v !== null)}
+              />
             )}
 
             {/* Footer with metadata */}
