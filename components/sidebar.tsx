@@ -17,7 +17,7 @@ import {
   X,
 } from 'lucide-react';
 
-interface ModernSidebarProps {
+interface SidebarProps {
   chats: Chat[];
   activeChat: string | null;
   onSelectChat: (id: string) => void;
@@ -28,12 +28,12 @@ interface GroupedChats {
   [key: string]: Chat[];
 }
 
-export default function ModernSidebar({
+export default function Sidebar({
   chats,
   activeChat,
   onSelectChat,
   onNewChat,
-}: ModernSidebarProps) {
+}: SidebarProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [mobileOpen, setMobileOpen] = useState(false);
 

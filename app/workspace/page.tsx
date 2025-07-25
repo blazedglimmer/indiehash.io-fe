@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import ModernChatInterface from '@/components/modern-chat-interface';
-import ModernSidebar from '@/components/modern-sidebar';
+import WorkspaceInterface from '@/components/workspace-interface';
+import Sidebar from '@/components/sidebar';
 import { createNewChat, getAllChats } from '@/utils/storage';
 import { Chat } from '@/types';
 
@@ -36,14 +36,14 @@ export default function ChatPage() {
 
   return (
     <div className="h-screen bg-gradient-to-br from-gray-900 via-gray-900 to-indigo-900/20 text-white overflow-hidden">
-      <ModernSidebar
+      <Sidebar
         chats={chats}
         activeChat={activeChatId}
         onSelectChat={setActiveChatId}
         onNewChat={handleNewChat}
       />
       <div className="flex-1 md:ml-80">
-        <ModernChatInterface chat={activeChat} setChats={setChats} />
+        <WorkspaceInterface chat={activeChat} setChats={setChats} />
       </div>
     </div>
   );
