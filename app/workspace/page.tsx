@@ -42,9 +42,7 @@ export default function ChatPage() {
         onSelectChat={setActiveChatId}
         onNewChat={handleNewChat}
       />
-      <div className="flex-1 md:ml-80">
-        <WorkspaceInterface chat={activeChat} setChats={setChats} />
-      </div>
+      <WorkspaceInterface chat={activeChat} setChats={setChats} />
     </div>
   );
 }
