@@ -2,9 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import WorkspaceInterface from '@/components/workspace-interface';
-import Sidebar from '@/components/sidebar';
+// import Sidebar from '@/components/sidebar';
 import { createNewChat, getAllChats } from '@/utils/storage';
 import { Chat } from '@/types';
+import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
+import { AppSidebar } from '@/components/app-sidebar';
+import { WorkspaceHeader } from '@/components/workspace-header';
 
 export default function ChatPage() {
   const [chats, setChats] = useState<Chat[]>([]);
@@ -35,14 +38,26 @@ export default function ChatPage() {
   const activeChat = chats.find(chat => chat.id === activeChatId) || null;
 
   return (
-    <div className="h-screen bg-gradient-to-br from-gray-900 via-gray-900 to-indigo-900/20 text-white overflow-hidden">
-      <Sidebar
+    <div className="h-screen bg-gradient-to-br from-gray-900 via-gray-900 to-indigo-900/20 text-white overflow-hidden flex flex-1">
+      {/* <Sidebar
         chats={chats}
         activeChat={activeChatId}
         onSelectChat={setActiveChatId}
         onNewChat={handleNewChat}
-      />
-      <WorkspaceInterface chat={activeChat} setChats={setChats} />
+      /> */}
+
+      <SidebarProvider>
+        <AppSidebar
+          chats={chats}
+          activeChatId={activeChatId}
+          setActiveChatId={setActiveChatId}
+          handleNewChat={handleNewChat}
+        />
+        <SidebarInset>
+          <WorkspaceHeader />
+          <WorkspaceInterface chat={activeChat} setChats={setChats} />
+        </SidebarInset>
+      </SidebarProvider>
     </div>
   );
 }
