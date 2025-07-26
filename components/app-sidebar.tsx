@@ -91,7 +91,7 @@ export function AppSidebar({
       <SidebarContent>
         <SidebarGroup className="h-full flex flex-col mobile-scroll">
           {/* Header */}
-          <SidebarGroupLabel className="p-4 md:p-6 border-b border-white/10">
+          <SidebarGroupLabel className="p-4 md:p-6 border-b border-white/10 mt-6 md:mt-4">
             {/* New Chat Button */}
             <button
               onClick={handleNewChat}
