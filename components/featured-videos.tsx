@@ -50,20 +50,22 @@ const FeaturedVideos: FC<{ videos: VideoType[] }> = ({ videos }) => {
                   {video?.views?.toLocaleString()} views
                 </p>
                 <p className="text-gray-300 text-xs md:text-sm mb-3 md:mb-4 line-clamp-2 md:line-clamp-3">
-                  {video?.description && video.description.length > 200 && !expanded[idx]
-                    ? (
-                        <>
-                          {video.description.substring(0, 200)}{' '}
-                          <button
-                            className="text-indigo-400 underline ml-1 hover:text-indigo-300 focus:outline-none"
-                            onClick={() => handleReadMore(idx)}
-                            type="button"
-                          >
-                            Read more
-                          </button>
-                        </>
-                      )
-                    : video?.description}
+                  {video?.description && video.description.length > 200 && !expanded[idx] ? (
+                    <>
+                      {video.description.substring(0, 200)}{' '}
+                      <button
+                        className="text-indigo-400 underline ml-1 hover:text-indigo-300 focus:outline-none"
+                        onClick={() => handleReadMore(idx)}
+                        type="button"
+                      >
+                        Read more
+                      </button>
+                    </>
+                  ) : (
+                    <span className={expanded[idx] ? '' : 'line-clamp-2 md:line-clamp-3'}>
+                      {video?.description}
+                    </span>
+                  )}
                 </p>
                 <div className="flex flex-wrap gap-1 md:gap-2 mb-3 md:mb-4">
                   {video?.tags
