@@ -49,7 +49,7 @@ const FeaturedVideos: FC<{ videos: VideoType[] }> = ({ videos }) => {
                   By {video?.channel} •{' '}
                   {video?.views?.toLocaleString()} views
                 </p>
-                <p className="text-gray-300 text-xs md:text-sm mb-3 md:mb-4 line-clamp-2 md:line-clamp-3">
+                <p className={`text-gray-300 text-xs md:text-sm mb-3 md:mb-4 ${!expanded[idx] ? 'line-clamp-2 md:line-clamp-3' : ''}`}>
                   {video?.description && video.description.length > 200 && !expanded[idx] ? (
                     <>
                       {video.description.substring(0, 200)}{' '}
@@ -62,9 +62,7 @@ const FeaturedVideos: FC<{ videos: VideoType[] }> = ({ videos }) => {
                       </button>
                     </>
                   ) : (
-                    <span className={expanded[idx] ? '' : 'line-clamp-2 md:line-clamp-3'}>
-                      {video?.description}
-                    </span>
+                    video?.description
                   )}
                 </p>
                 <div className="flex flex-wrap gap-1 md:gap-2 mb-3 md:mb-4">
