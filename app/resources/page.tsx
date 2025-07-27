@@ -43,7 +43,6 @@ const ResourcesPage = () => {
   ];
 
   const categories = [
-    { id: 'all', name: 'All Categories' },
     { id: 'frontend', name: 'Frontend Development' },
     { id: 'backend', name: 'Backend Development' },
     { id: 'blockchain', name: 'Blockchain' },
@@ -94,6 +93,42 @@ const ResourcesPage = () => {
       url: 'https://youtube.com/traversymedia',
       verified: true
     },
+    {
+      id: '4',
+      title: 'Tech With Tim',
+      platform: 'youtube',
+      category: 'backend',
+      tags: ['Python', 'Django', 'Flask'],
+      handle: '@TechWithTim',
+      description: 'Python programming tutorials and backend development',
+      votes: 654,
+      url: 'https://youtube.com/TechWithTim',
+      verified: true
+    },
+    {
+      id: '5',
+      title: 'Sentdex',
+      platform: 'youtube',
+      category: 'ai',
+      tags: ['Python', 'AI', 'Machine Learning'],
+      handle: '@sentdex',
+      description: 'Machine learning and AI tutorials with Python',
+      votes: 543,
+      url: 'https://youtube.com/sentdex',
+      verified: true
+    },
+    {
+      id: '6',
+      title: 'Dapp University',
+      platform: 'youtube',
+      category: 'blockchain',
+      tags: ['Web3', 'Solidity', 'Blockchain'],
+      handle: '@DappUniversity',
+      description: 'Blockchain development and smart contract tutorials',
+      votes: 432,
+      url: 'https://youtube.com/DappUniversity',
+      verified: true
+    },
   ].sort((a, b) => b.votes - a.votes);
 
   const handleTagToggle = (tag: string) => {
@@ -112,15 +147,17 @@ const ResourcesPage = () => {
     return matchesPlatform && matchesCategory && matchesTags;
   });
 
+
+
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen bg-gray-900 text-gray-100">
       {/* Header */}
       <header className="bg-gray-900 border-b border-gray-800 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="h-16 flex items-center justify-between">
             <div className="flex items-center gap-4">
               <button
-                onClick={() => router.push('/landing')}
+                onClick={() => router.push('/')}
                 className="text-gray-400 hover:text-primary"
               >
                 <ChevronLeft size={20} />
@@ -133,7 +170,7 @@ const ResourcesPage = () => {
                 <input
                   type="text"
                   placeholder="Search resources..."
-                  className="w-full pl-10 pr-4 py-2 border border-gray-800 rounded-lg bg-gray-800 text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-800 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               </div>
             </div>
@@ -149,8 +186,8 @@ const ResourcesPage = () => {
                   onClick={() => setSelectedPlatform(platform.id)}
                   className={`px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors ${
                     selectedPlatform === platform.id
-                      ? 'bg-gradient-to-r from-primary to-primary-light text-gray-900'
-                      : 'hover:bg-gray-800 text-gray-300'
+                      ? 'bg-gradient-to-r from-primary to-primary-light text-white'
+                      : 'hover:bg-gray-800 text-gray-200 hover:text-white'
                   }`}
                 >
                   {Icon && <Icon className="h-4 w-4" />}
@@ -170,14 +207,24 @@ const ResourcesPage = () => {
             <div className="bg-gray-800 rounded-2xl border border-gray-700 p-6">
               <h2 className="text-lg font-semibold text-primary mb-4">Categories</h2>
               <div className="space-y-1">
+                <button
+                  onClick={() => setSelectedCategory('all')}
+                  className={`w-full text-left px-3 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
+                    selectedCategory === 'all'
+                      ? 'bg-gradient-to-r from-primary to-primary-light text-white'
+                      : 'text-gray-200 hover:bg-gray-900 hover:text-white'
+                  }`}
+                >
+                  All Categories
+                </button>
                 {categories.map(category => (
                   <button
                     key={category.id}
                     onClick={() => setSelectedCategory(category.id)}
                     className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
                       selectedCategory === category.id
-                        ? 'bg-gradient-to-r from-primary to-primary-light text-gray-900 font-medium'
-                        : 'text-gray-300 hover:bg-gray-900'
+                        ? 'bg-gradient-to-r from-primary to-primary-light text-white font-medium'
+                        : 'text-gray-200 hover:bg-gray-900 hover:text-white'
                     }`}
                   >
                     {category.name}
@@ -196,8 +243,8 @@ const ResourcesPage = () => {
                     onClick={() => handleTagToggle(tag)}
                     className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm ${
                       selectedTags.includes(tag)
-                        ? 'bg-gradient-to-r from-primary to-primary-light text-gray-900 font-medium'
-                        : 'bg-gray-900 text-gray-300 hover:bg-gray-800'
+                        ? 'bg-gradient-to-r from-primary to-primary-light text-white font-medium'
+                        : 'bg-gray-900 text-gray-200 hover:bg-gray-800 hover:text-white'
                     } transition-colors`}
                   >
                     <Hash className="h-3 w-3" />
@@ -268,7 +315,7 @@ const ResourcesPage = () => {
                           </a>
                         </div>
                       </div>
-                      <p className="mt-1 text-sm text-gray-300">
+                      <p className="mt-1 text-sm text-gray-200">
                         {resource.description}
                       </p>
                       <div className="flex flex-wrap gap-2 mt-2">
