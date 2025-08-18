@@ -19,7 +19,7 @@ export interface VideoType {
 const FeaturedVideos: FC<{ videos: VideoType[] }> = ({ videos }) => {
   const [expanded, setExpanded] = useState<{ [key: number]: boolean }>({});
   const handleReadMore = (idx: number) => {
-    setExpanded(prev => ({ ...prev, [idx]: true }));
+    setExpanded(prev => ({ ...prev, [idx]: !prev[idx] }));
   };
   return (
     <div className="mb-6 md:mb-8">
@@ -52,10 +52,10 @@ const FeaturedVideos: FC<{ videos: VideoType[] }> = ({ videos }) => {
                     {video?.views?.toLocaleString()} views
                   </p>
                   <p className={`text-gray-300 text-xs mb-2 leading-relaxed ${!expanded[idx] ? 'line-clamp-2' : ''}`}>
-                    {video?.description && video.description.length > 80 ? (
+                    {video?.description && video.description.length > 50 ? (
                       !expanded[idx] ? (
                         <>
-                          {video.description.substring(0, 80)}{' '}
+                          {video.description.substring(0, 50)}{' '}
                           <button
                             className="text-indigo-400 underline ml-1 hover:text-indigo-300 focus:outline-none"
                             onClick={() => handleReadMore(idx)}
