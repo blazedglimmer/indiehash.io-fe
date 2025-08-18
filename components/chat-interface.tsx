@@ -140,7 +140,7 @@ export default function ChatInterface({
   const predefinedPrompts = [
     'What can you do?',
     'Show me trending topics.',
-    'Help me get started with IndieChat.',
+    'Help me get started with IndieHash.',
     'Suggest some interesting AI use cases.',
     'How do I use resources?',
   ];
@@ -244,7 +244,7 @@ export default function ChatInterface({
                 />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold mb-2">Hi, I'm IndieChat.</h2>
+            <h2 className="text-2xl font-bold mb-2">Hi, I'm IndieHash.</h2>
             <p className="text-gray-400 mb-4">
               Choose a prompt to get started:
             </p>

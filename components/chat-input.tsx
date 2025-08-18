@@ -22,7 +22,7 @@ export default function ChatInput({ onSendMessage, disabled }: ChatInputProps) {
         type="text"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        placeholder="Message IndieChat"
+        placeholder="Message IndieHash"
         className="w-full py-3 px-4 bg-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
         disabled={disabled}
       />
