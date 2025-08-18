@@ -451,7 +451,7 @@ export default function WorkspaceInterface({
                   Response Metadata
                 </span>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
+              <div className="grid grid-cols-3 gap-2 md:gap-4">
                 <div className="glass-dark p-3 rounded-lg text-center">
                   <div className="text-base md:text-lg font-bold text-white">
                     {data.total_results || 0}
@@ -470,19 +470,6 @@ export default function WorkspaceInterface({
                   </div>
                   <div className="text-xs text-gray-400">Sources</div>
                 </div>
-                <div className="glass-dark p-3 rounded-lg text-center">
-                  <div className="text-base md:text-lg font-bold text-white">
-                    {data.similar_results?.[0]?.processing_time_ms.toFixed(0) ||
-                      0}
-                    ms
-                  </div>
-                  <div className="text-xs text-gray-400">Response Time</div>
-                </div>
-              </div>
-              <div className="mt-4 text-center">
-                <span className="text-xs text-gray-500">
-                  Request ID: {data.request_id}
-                </span>
               </div>
             </div>
           </div>
