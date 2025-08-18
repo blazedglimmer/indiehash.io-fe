@@ -286,7 +286,43 @@ body {
   
   /* Mobile-specific card padding */
   .card-modern {
-    padding: 1rem;
+    padding: 0.75rem;
+  }
+  
+  /* Mobile-optimized text sizes */
+  .mobile-text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+  
+  .mobile-text-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+  
+  /* Mobile spacing utilities */
+  .mobile-p-2 {
+    padding: 0.5rem;
+  }
+  
+  .mobile-mb-2 {
+    margin-bottom: 0.5rem;
+  }
+  
+  .mobile-mb-3 {
+    margin-bottom: 0.75rem;
+  }
+  
+  /* Mobile touch targets */
+  .mobile-touch {
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation;
+  }
+  
+  /* Mobile hidden elements */
+  .mobile-hidden {
+    display: none;
   }
   
   /* Reduce motion for better performance */

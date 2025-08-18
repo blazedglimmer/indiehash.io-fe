@@ -410,24 +410,24 @@ export default function WorkspaceInterface({
               ))}
             </div>
 
-            {/* Summary Section */}
+            {/* Summary Section - Mobile Optimized */}
             {summary && (
-              <div className="mb-6 md:mb-8">
-                <div className="flex items-center gap-2 mb-3 md:mb-4">
-                  <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center">
+              <div className="mb-4 md:mb-8">
+                <div className="flex items-center gap-2 mb-2 md:mb-4">
+                  <div className="w-5 h-5 md:w-8 md:h-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center">
                     <Sparkles className="w-3 h-3 md:w-4 md:h-4 text-white" />
                   </div>
-                  <h3 className="text-base md:text-lg font-semibold text-white">
+                  <h3 className="text-sm md:text-lg font-semibold text-white">
                     AI Summary
                   </h3>
                 </div>
-                <div className="glass-dark p-4 md:p-6 rounded-2xl mb-3 md:mb-4">
+                <div className="glass-dark p-3 md:p-6 rounded-xl md:rounded-2xl mb-2 md:mb-4">
                   <MarkdownResponse content={summary} />
                 </div>
                 {/* Enriched Content Section */}
                 {data.enriched_content && (
-                  <div className="glass-dark p-4 md:p-6 rounded-2xl border border-indigo-500/30">
-                    <h4 className="text-sm md:text-md font-semibold text-indigo-300 mb-2">
+                  <div className="glass-dark p-3 md:p-6 rounded-xl md:rounded-2xl border border-indigo-500/30">
+                    <h4 className="text-xs md:text-md font-semibold text-indigo-300 mb-2">
                       Enriched Insights
                     </h4>
                     <MarkdownResponse content={data.enriched_content} />
@@ -443,29 +443,29 @@ export default function WorkspaceInterface({
               />
             )}
 
-            {/* Footer with metadata */}
-            <div className="mt-6 md:mt-8 pt-4 md:pt-6 border-t border-white/10">
-              <div className="flex items-center gap-2 mb-4">
-                <Activity className="w-4 h-4 text-gray-400" />
-                <span className="text-xs md:text-sm text-gray-400">
+            {/* Footer with metadata - Mobile Optimized */}
+            <div className="mt-4 md:mt-8 pt-3 md:pt-6 border-t border-white/10">
+              <div className="flex items-center gap-2 mb-3 md:mb-4">
+                <Activity className="w-3 h-3 md:w-4 md:h-4 text-gray-400" />
+                <span className="text-xs text-gray-400">
                   Response Metadata
                 </span>
               </div>
               <div className="grid grid-cols-3 gap-2 md:gap-4">
-                <div className="glass-dark p-3 rounded-lg text-center">
-                  <div className="text-base md:text-lg font-bold text-white">
+                <div className="glass-dark p-2 md:p-3 rounded-lg text-center">
+                  <div className="text-sm md:text-lg font-bold text-white">
                     {data.total_results || 0}
                   </div>
                   <div className="text-xs text-gray-400">Results</div>
                 </div>
-                <div className="glass-dark p-3 rounded-lg text-center">
-                  <div className="text-base md:text-lg font-bold text-white">
+                <div className="glass-dark p-2 md:p-3 rounded-lg text-center">
+                  <div className="text-sm md:text-lg font-bold text-white">
                     {videos.length}
                   </div>
                   <div className="text-xs text-gray-400">Videos</div>
                 </div>
-                <div className="glass-dark p-3 rounded-lg text-center">
-                  <div className="text-base md:text-lg font-bold text-white">
+                <div className="glass-dark p-2 md:p-3 rounded-lg text-center">
+                  <div className="text-sm md:text-lg font-bold text-white">
                     {data.similar_results?.length || 0}
                   </div>
                   <div className="text-xs text-gray-400">Sources</div>
@@ -474,31 +474,23 @@ export default function WorkspaceInterface({
             </div>
           </div>
 
-          {/* Action Buttons */}
-          <div className="grid grid-cols-2 md:grid-cols-4 items-center justify-center gap-2 md:gap-4 mb-6 md:mb-8 px-4 md:px-0">
-            <button className="flex items-center justify-center gap-2 px-6 py-3 rounded-full glass hover:bg-white/10 transition-colors">
+          {/* Action Buttons - Mobile Optimized */}
+          <div className="flex items-center justify-center gap-1 md:gap-4 mb-4 md:mb-8 px-2 md:px-0">
+            <button className="flex items-center justify-center gap-1 md:gap-2 px-3 md:px-6 py-2 md:py-3 rounded-full glass hover:bg-white/10 transition-colors text-xs md:text-sm">
               <ThumbsUp className="w-3 h-3 md:w-4 md:h-4 text-gray-400" />
-              <span className="text-gray-300 text-sm md:text-base mobile-hidden md:inline">
-                Helpful
-              </span>
+              <span className="text-gray-300 mobile-hidden md:inline">Helpful</span>
             </button>
-            <button className="flex items-center justify-center gap-2 px-6 py-3 rounded-full glass hover:bg-white/10 transition-colors">
+            <button className="flex items-center justify-center gap-1 md:gap-2 px-3 md:px-6 py-2 md:py-3 rounded-full glass hover:bg-white/10 transition-colors text-xs md:text-sm">
               <Share2 className="w-3 h-3 md:w-4 md:h-4 text-gray-400" />
-              <span className="text-gray-300 text-sm md:text-base mobile-hidden md:inline">
-                Share
-              </span>
+              <span className="text-gray-300 mobile-hidden md:inline">Share</span>
             </button>
-            <button className="flex items-center justify-center gap-2 px-6 py-3 rounded-full glass hover:bg-white/10 transition-colors">
+            <button className="flex items-center justify-center gap-1 md:gap-2 px-3 md:px-6 py-2 md:py-3 rounded-full glass hover:bg-white/10 transition-colors text-xs md:text-sm">
               <Bookmark className="w-3 h-3 md:w-4 md:h-4 text-gray-400" />
-              <span className="text-gray-300 text-sm md:text-base mobile-hidden md:inline">
-                Save
-              </span>
+              <span className="text-gray-300 mobile-hidden md:inline">Save</span>
             </button>
-            <button className="flex items-center justify-center gap-2 px-6 py-3 rounded-full glass hover:bg-white/10 transition-colors">
+            <button className="flex items-center justify-center gap-1 md:gap-2 px-3 md:px-6 py-2 md:py-3 rounded-full glass hover:bg-white/10 transition-colors text-xs md:text-sm">
               <RefreshCw className="w-3 h-3 md:w-4 md:h-4 text-gray-400" />
-              <span className="text-gray-300 text-sm md:text-base mobile-hidden md:inline">
-                Regenerate
-              </span>
+              <span className="text-gray-300 mobile-hidden md:inline">Regenerate</span>
             </button>
           </div>
         </div>
